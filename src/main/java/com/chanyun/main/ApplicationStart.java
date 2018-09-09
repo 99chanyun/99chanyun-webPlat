@@ -21,8 +21,8 @@ import org.springframework.http.HttpStatus;
  *
  */
 @SpringBootApplication
-@ComponentScan(value={"com.xpy"})
-@MapperScan("com.xpy.dao")
+@ComponentScan(value={"com.chanyun"})
+@MapperScan("com.chanyun.dao")
 @EnableAutoConfiguration  
 public class ApplicationStart {
 	public static void main(String[] args) {
