@@ -1,0 +1,42 @@
+CREATE TABLE `tb_index_banner` (                                                                                  
+                   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',                                                        
+                   `img_url` varchar(100) NOT NULL COMMENT '图片路径',                                                         
+                   `img_description` varchar(500) NOT NULL COMMENT '描述',                                                       
+                   `img_link` varchar(100) NOT NULL COMMENT '链接',                                                              
+                   `sort` int(2) NOT NULL COMMENT '排序',                                                                        
+                   `status` int(2) NOT NULL COMMENT '状态 0 启用 1禁用',                                                     
+                   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',  
+                   PRIMARY KEY (`id`)                                                                                              
+                 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_news` (                                                                                          
+           `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',                                                        
+           `news_title` varchar(50) NOT NULL COMMENT '资讯标题',                                                       
+           `news_description` varchar(200) NOT NULL COMMENT '资讯描述',                                                
+           `news_content` longtext NOT NULL COMMENT '资讯内容',                                                        
+           `news_keywords` varchar(200) NOT NULL COMMENT '资讯关键字',                                                
+           `news_type` int(1) NOT NULL COMMENT '资讯类型 0佛门动态 1政策法规 2佛学入门',                   
+           `news_img` varchar(50) NOT NULL COMMENT '资讯封面',                                                         
+           `news_sort` int(2) NOT NULL COMMENT '资讯首页排序',                                                       
+           `news_status` int(2) NOT NULL COMMENT '资讯状态 0启用 1禁用',                                           
+           `news_recommend` int(2) NOT NULL COMMENT '资讯首页推荐 0推荐 1不推荐 默认不推荐',               
+           `news_templeid` int(11) NOT NULL COMMENT '寺庙id',                                                            
+           `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',  
+           `news_source` varchar(50) NOT NULL COMMENT '资讯来源',                                                      
+           PRIMARY KEY (`id`)                                                                                              
+         ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `tb_temple` (                                                                                              
+             `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键id',                                                              
+             `temple_number` varchar(10) NOT NULL COMMENT '寺庙编号',                                                          
+             `temple_name` varchar(50) NOT NULL COMMENT '寺庙名称',                                                            
+             `temple_province` varchar(50) DEFAULT NULL COMMENT '寺庙所在省',                                                 
+             `temple_city` varchar(50) DEFAULT NULL COMMENT '寺庙所在市',                                                     
+             `temple_county` varchar(50) DEFAULT NULL COMMENT '寺庙所在区/县',                                               
+             `temple_address` varchar(200) DEFAULT NULL COMMENT '寺庙详细地址',                                              
+             `status` int(2) DEFAULT NULL COMMENT '状态 0 申请 1启用 2禁用 3申请未通过 4异常',                      
+             `temple_contact_name` varchar(50) DEFAULT NULL COMMENT '寺庙联系人姓名',                                       
+             `temple_contact_tel` varchar(20) DEFAULT NULL COMMENT '寺庙联系人电话',                                        
+             `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '寺庙申请时间',  
+             PRIMARY KEY (`id`)                                                                                                    
+           ) ENGINE=InnoDB DEFAULT CHARSET=utf8 
