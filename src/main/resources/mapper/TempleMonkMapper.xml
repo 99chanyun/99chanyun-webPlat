@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chanyun.dao.TempleMonkMapper">
+  <resultMap id="BaseResultMap" type="com.chanyun.entity.TempleMonk">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="temple_id" jdbcType="INTEGER" property="templeId" />
+    <result column="temple_monk_name" jdbcType="VARCHAR" property="templeMonkName" />
+    <result column="temple_monk_desciption" jdbcType="VARCHAR" property="templeMonkDesciption" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+    <result column="temple_monk_cover_img" jdbcType="VARCHAR" property="templeMonkCoverImg" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chanyun.entity.TempleMonk">
+    <result column="temple_monk_introduce" jdbcType="LONGVARCHAR" property="templeMonkIntroduce" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, temple_id, temple_monk_name, temple_monk_desciption, sort, temple_monk_cover_img, 
+    status, create_time
+  </sql>
+  <sql id="Blob_Column_List">
+    temple_monk_introduce
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_temple_monk
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_temple_monk
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chanyun.entity.TempleMonk">
+    insert into tb_temple_monk (id, temple_id, temple_monk_name, 
+      temple_monk_desciption, sort, temple_monk_cover_img, 
+      status, create_time, temple_monk_introduce
+      )
+    values (#{id,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeMonkName,jdbcType=VARCHAR}, 
+      #{templeMonkDesciption,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER}, #{templeMonkCoverImg,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chanyun.entity.TempleMonk">
+    insert into tb_temple_monk
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="templeId != null and templeId != ''">
+        temple_id,
+      </if>
+      <if test="templeMonkName != null and templeMonkName != ''">
+        temple_monk_name,
+      </if>
+      <if test="templeMonkDesciption != null and templeMonkDesciption != ''">
+        temple_monk_desciption,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+      <if test="templeMonkCoverImg != null and templeMonkCoverImg != ''">
+        temple_monk_cover_img,
+      </if>
+      <if test="status != null ">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="templeMonkIntroduce != null and templeMonkIntroduce != ''">
+        temple_monk_introduce,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templeId != null and templeId != ''">
+        #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeMonkName != null and templeMonkName != ''">
+        #{templeMonkName,jdbcType=VARCHAR},
+      </if>
+      <if test="templeMonkDesciption != null and templeMonkDesciption != ''">
+        #{templeMonkDesciption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null and sort != ''">
+        #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="templeMonkCoverImg != null and templeMonkCoverImg != ''">
+        #{templeMonkCoverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="templeMonkIntroduce != null and templeMonkIntroduce != ''">
+        #{templeMonkIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chanyun.entity.TempleMonk">
+    update tb_temple_monk
+    <set>
+      <if test="templeId != null and templeId != ''">
+        temple_id = #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeMonkName != null  and templeMonkName != ''">
+        temple_monk_name = #{templeMonkName,jdbcType=VARCHAR},
+      </if>
+      <if test="templeMonkDesciption != null  and templeMonkDesciption != ''">
+        temple_monk_desciption = #{templeMonkDesciption,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null  and sort != ''">
+        sort = #{sort,jdbcType=INTEGER},
+      </if>
+      <if test="templeMonkCoverImg != null  and templeMonkCoverImg != ''">
+        temple_monk_cover_img = #{templeMonkCoverImg,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null ">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="templeMonkIntroduce != null  and templeMonkIntroduce != ''">
+        temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chanyun.entity.TempleMonk">
+    update tb_temple_monk
+    set temple_id = #{templeId,jdbcType=INTEGER},
+      temple_monk_name = #{templeMonkName,jdbcType=VARCHAR},
+      temple_monk_desciption = #{templeMonkDesciption,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      temple_monk_cover_img = #{templeMonkCoverImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chanyun.entity.TempleMonk">
+    update tb_temple_monk
+    set temple_id = #{templeId,jdbcType=INTEGER},
+      temple_monk_name = #{templeMonkName,jdbcType=VARCHAR},
+      temple_monk_desciption = #{templeMonkDesciption,jdbcType=VARCHAR},
+      sort = #{sort,jdbcType=INTEGER},
+      temple_monk_cover_img = #{templeMonkCoverImg,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByParams" parameterType="com.chanyun.entity.TempleMonk" resultMap="ResultMapWithBLOBs">
+  		select
+  		  <include refid="Base_Column_List" />
+    		,
+    		<include refid="Blob_Column_List" /> 
+    		from tb_temple_monk where status = 1
+    		<trim prefixOverrides="and">
+    			<if test="templeId != null and templeId != ''">
+			        and temple_id = #{templeId,jdbcType=INTEGER}
+			      </if>
+			      <if test="templeMonkName != null  and templeMonkName != ''">
+			        and temple_monk_name = #{templeMonkName,jdbcType=VARCHAR}
+			      </if>
+			      <if test="templeMonkDesciption != null  and templeMonkDesciption != ''">
+			        and temple_monk_desciption = #{templeMonkDesciption,jdbcType=VARCHAR}
+			      </if>
+			      <if test="sort != null  and sort != ''">
+			        and sort = #{sort,jdbcType=INTEGER}
+			      </if>
+			      <if test="templeMonkCoverImg != null  and templeMonkCoverImg != ''">
+			        and temple_monk_cover_img = #{templeMonkCoverImg,jdbcType=VARCHAR}
+			      </if>
+			      <if test="status != null">
+			        and status = #{status,jdbcType=INTEGER}
+			      </if>
+			      <if test="createTime != null">
+			        and create_time = #{createTime,jdbcType=TIMESTAMP}
+			      </if>
+			      <if test="templeMonkIntroduce != null  and templeMonkIntroduce != ''">
+			        and temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
+			      </if>
+    		</trim>
+    		order by sort asc,create_time desc limit 3
+  </select>
+  
+  <select id="selectByPage" parameterType="com.chanyun.entity.TempleMonk" resultMap="ResultMapWithBLOBs">
+  		select
+  		  <include refid="Base_Column_List" />
+    		,
+    		<include refid="Blob_Column_List" /> 
+    		from tb_temple_monk where status = 1
+    		<trim prefixOverrides="and">
+    			<if test="templeId != null and templeId != ''">
+			        and temple_id = #{templeId,jdbcType=INTEGER}
+			      </if>
+			      <if test="templeMonkName != null  and templeMonkName != ''">
+			        and temple_monk_name = #{templeMonkName,jdbcType=VARCHAR}
+			      </if>
+			      <if test="templeMonkDesciption != null  and templeMonkDesciption != ''">
+			        and temple_monk_desciption = #{templeMonkDesciption,jdbcType=VARCHAR}
+			      </if>
+			      <if test="sort != null  and sort != ''">
+			        and sort = #{sort,jdbcType=INTEGER}
+			      </if>
+			      <if test="templeMonkCoverImg != null  and templeMonkCoverImg != ''">
+			        and temple_monk_cover_img = #{templeMonkCoverImg,jdbcType=VARCHAR}
+			      </if>
+			      <if test="status != null">
+			        and status = #{status,jdbcType=INTEGER}
+			      </if>
+			      <if test="createTime != null">
+			        and create_time = #{createTime,jdbcType=TIMESTAMP}
+			      </if>
+			      <if test="templeMonkIntroduce != null  and templeMonkIntroduce != ''">
+			        and temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
+			      </if>
+    		</trim>
+  </select>
+</mapper>

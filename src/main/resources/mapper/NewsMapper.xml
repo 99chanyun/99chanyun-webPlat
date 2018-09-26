@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chanyun.dao.NewsMapper">
+  <resultMap id="BaseResultMap" type="com.chanyun.entity.News">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="news_title" jdbcType="VARCHAR" property="newsTitle" />
+    <result column="news_description" jdbcType="VARCHAR" property="newsDescription" />
+    <result column="news_keywords" jdbcType="VARCHAR" property="newsKeywords" />
+    <result column="news_type" jdbcType="INTEGER" property="newsType" />
+    <result column="news_img" jdbcType="VARCHAR" property="newsImg" />
+    <result column="news_sort" jdbcType="INTEGER" property="newsSort" />
+    <result column="news_status" jdbcType="INTEGER" property="newsStatus" />
+    <result column="news_recommend" jdbcType="INTEGER" property="newsRecommend" />
+    <result column="news_templeid" jdbcType="INTEGER" property="newsTempleid" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="news_source" jdbcType="VARCHAR" property="newsSource" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.chanyun.entity.News">
+    <result column="news_content" jdbcType="LONGVARCHAR" property="newsContent" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, news_title, news_description, news_keywords, news_type, news_img, news_sort, 
+    news_status, news_recommend, news_templeid, create_time, news_source
+  </sql>
+  <sql id="Blob_Column_List">
+    news_content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from tb_news
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_news
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.News">
+    insert into tb_news (id, news_title, news_description, 
+      news_keywords, news_type, news_img, 
+      news_sort, news_status, news_recommend, 
+      news_templeid, create_time, news_source, 
+      news_content)
+    values (#{id,jdbcType=INTEGER}, #{newsTitle,jdbcType=VARCHAR}, #{newsDescription,jdbcType=VARCHAR}, 
+      #{newsKeywords,jdbcType=VARCHAR}, #{newsType,jdbcType=INTEGER}, #{newsImg,jdbcType=VARCHAR}, 
+      #{newsSort,jdbcType=INTEGER}, #{newsStatus,jdbcType=INTEGER}, #{newsRecommend,jdbcType=INTEGER}, 
+      #{newsTempleid,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{newsSource,jdbcType=VARCHAR}, 
+      #{newsContent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.News">
+    insert into tb_news
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="newsTitle != null">
+        news_title,
+      </if>
+      <if test="newsDescription != null">
+        news_description,
+      </if>
+      <if test="newsKeywords != null">
+        news_keywords,
+      </if>
+      <if test="newsType != null">
+        news_type,
+      </if>
+      <if test="newsImg != null">
+        news_img,
+      </if>
+      <if test="newsSort != null">
+        news_sort,
+      </if>
+      <if test="newsStatus != null">
+        news_status,
+      </if>
+      <if test="newsRecommend != null">
+        news_recommend,
+      </if>
+      <if test="newsTempleid != null">
+        news_templeid,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="newsSource != null">
+        news_source,
+      </if>
+      <if test="newsContent != null">
+        news_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="newsTitle != null">
+        #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsDescription != null">
+        #{newsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="newsKeywords != null">
+        #{newsKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="newsType != null">
+        #{newsType,jdbcType=INTEGER},
+      </if>
+      <if test="newsImg != null">
+        #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSort != null">
+        #{newsSort,jdbcType=INTEGER},
+      </if>
+      <if test="newsStatus != null">
+        #{newsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newsRecommend != null">
+        #{newsRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="newsTempleid != null">
+        #{newsTempleid,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsSource != null">
+        #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        #{newsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chanyun.entity.News">
+    update tb_news
+    <set>
+      <if test="newsTitle != null">
+        news_title = #{newsTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="newsDescription != null">
+        news_description = #{newsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="newsKeywords != null">
+        news_keywords = #{newsKeywords,jdbcType=VARCHAR},
+      </if>
+      <if test="newsType != null">
+        news_type = #{newsType,jdbcType=INTEGER},
+      </if>
+      <if test="newsImg != null">
+        news_img = #{newsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="newsSort != null">
+        news_sort = #{newsSort,jdbcType=INTEGER},
+      </if>
+      <if test="newsStatus != null">
+        news_status = #{newsStatus,jdbcType=INTEGER},
+      </if>
+      <if test="newsRecommend != null">
+        news_recommend = #{newsRecommend,jdbcType=INTEGER},
+      </if>
+      <if test="newsTempleid != null">
+        news_templeid = #{newsTempleid,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="newsSource != null">
+        news_source = #{newsSource,jdbcType=VARCHAR},
+      </if>
+      <if test="newsContent != null">
+        news_content = #{newsContent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.chanyun.entity.News">
+    update tb_news
+    set news_title = #{newsTitle,jdbcType=VARCHAR},
+      news_description = #{newsDescription,jdbcType=VARCHAR},
+      news_keywords = #{newsKeywords,jdbcType=VARCHAR},
+      news_type = #{newsType,jdbcType=INTEGER},
+      news_img = #{newsImg,jdbcType=VARCHAR},
+      news_sort = #{newsSort,jdbcType=INTEGER},
+      news_status = #{newsStatus,jdbcType=INTEGER},
+      news_recommend = #{newsRecommend,jdbcType=INTEGER},
+      news_templeid = #{newsTempleid,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      news_source = #{newsSource,jdbcType=VARCHAR},
+      news_content = #{newsContent,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chanyun.entity.News">
+    update tb_news
+    set news_title = #{newsTitle,jdbcType=VARCHAR},
+      news_description = #{newsDescription,jdbcType=VARCHAR},
+      news_keywords = #{newsKeywords,jdbcType=VARCHAR},
+      news_type = #{newsType,jdbcType=INTEGER},
+      news_img = #{newsImg,jdbcType=VARCHAR},
+      news_sort = #{newsSort,jdbcType=INTEGER},
+      news_status = #{newsStatus,jdbcType=INTEGER},
+      news_recommend = #{newsRecommend,jdbcType=INTEGER},
+      news_templeid = #{newsTempleid,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      news_source = #{newsSource,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectIndexNews" resultMap="BaseResultMap">
+  		select 
+  		<include refid="Base_Column_List" />
+    	,
+    	<include refid="Blob_Column_List" />
+  		 from tb_news 
+  		 where news_status=1 and news_recommend=0 
+  		 order by news_sort ASC,create_time desc LIMIT 10;
+  </select>
+  
+  <select id="selectNewsByPage" parameterType="com.chanyun.entity.News" resultMap="ResultMapWithBLOBs">
+  		select 
+  		<include refid="Base_Column_List" />
+    	,
+    	<include refid="Blob_Column_List" />
+  		 from tb_news where news_status != 99
+  		 	  <if test="newsTitle != null">
+		         and news_title = #{newsTitle,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsDescription != null">
+		        and news_description = #{newsDescription,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsKeywords != null">
+		        and news_keywords = #{newsKeywords,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsType != null">
+		        and news_type = #{newsType,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsImg != null">
+		        and news_img = #{newsImg,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsSort != null">
+		        and news_sort = #{newsSort,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsStatus != null">
+		        and news_status = #{newsStatus,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsRecommend != null">
+		        and news_recommend = #{newsRecommend,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsTempleid != null">
+		        and news_templeid = #{newsTempleid,jdbcType=INTEGER}
+		      </if>
+		      <if test="createTime != null">
+		        and create_time = #{createTime,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="newsSource != null">
+		        and news_source = #{newsSource,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsContent != null">
+		        and news_content = #{newsContent,jdbcType=LONGVARCHAR}
+		      </if>
+  </select>
+  
+  <select id="selectNewsByParams" parameterType="com.chanyun.entity.News" resultMap="ResultMapWithBLOBs">
+  		select 
+  		<include refid="Base_Column_List" />
+    	,
+    	<include refid="Blob_Column_List" />
+  		 from tb_news where news_status != 99
+  		 	  <if test="newsTitle != null">
+		         and news_title = #{newsTitle,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsDescription != null">
+		        and news_description = #{newsDescription,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsKeywords != null">
+		        and news_keywords = #{newsKeywords,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsType != null">
+		        and news_type = #{newsType,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsImg != null">
+		        and news_img = #{newsImg,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsSort != null">
+		        and news_sort = #{newsSort,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsStatus != null">
+		        and news_status = #{newsStatus,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsRecommend != null">
+		        and news_recommend = #{newsRecommend,jdbcType=INTEGER}
+		      </if>
+		      <if test="newsTempleid != null">
+		        and news_templeid = #{newsTempleid,jdbcType=INTEGER}
+		      </if>
+		      <if test="createTime != null">
+		        and create_time = #{createTime,jdbcType=TIMESTAMP}
+		      </if>
+		      <if test="newsSource != null">
+		        and news_source = #{newsSource,jdbcType=VARCHAR}
+		      </if>
+		      <if test="newsContent != null">
+		        and news_content = #{newsContent,jdbcType=LONGVARCHAR}
+		      </if>
+		      order by create_time desc limit 1;
+  </select>
+</mapper>
