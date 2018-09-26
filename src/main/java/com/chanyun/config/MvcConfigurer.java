@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.chanyun.common;
+package com.chanyun.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;

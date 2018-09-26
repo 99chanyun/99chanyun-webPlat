@@ -1,4 +1,4 @@
-package com.chanyun.common;
+package com.chanyun.config;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import org.apache.ibatis.session.SqlSessionFactory;

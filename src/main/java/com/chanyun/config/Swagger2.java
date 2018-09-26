@@ -1,4 +1,4 @@
-package com.chanyun.controller;
+package com.chanyun.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

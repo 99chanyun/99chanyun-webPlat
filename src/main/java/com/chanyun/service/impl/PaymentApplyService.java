@@ -1,6 +1,5 @@
 package com.chanyun.service.impl;
 
-import com.chanyun.common.BaseResult;
 import com.chanyun.dao.PaymentApplyMapper;
 import com.chanyun.entity.PaymentApply;
 import com.chanyun.service.IPaymentApplyService;

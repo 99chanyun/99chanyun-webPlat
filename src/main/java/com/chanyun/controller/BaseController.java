@@ -1,7 +1,5 @@
 package com.chanyun.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.chanyun.common.BaseResult;
 
 /**
@@ -10,7 +8,7 @@ import com.chanyun.common.BaseResult;
  * @data  2017-6-17 上午10:36:51
  *
  */
-public class BaseController {
+public class BaseController<T> {
 	
 	/**
 	 * 返回json数据组装
@@ -18,10 +16,11 @@ public class BaseController {
 	 * @param message
 	 * @return
 	 */
-	public String returnBaseResult(String code,String message){
-		BaseResult br = new BaseResult();
+	public BaseResult<T> result(String code, String message, T data){
+		BaseResult<T> br = new BaseResult<T>();
 		br.setCode(code);
 		br.setMessage(message);
-		return JSONObject.toJSONString(br);
+		br.setData(data);
+		return br;
 	}
 }

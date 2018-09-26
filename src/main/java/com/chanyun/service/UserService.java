@@ -1,50 +1,44 @@
 package com.chanyun.service;
 
+import com.chanyun.entity.User;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.chanyun.dao.OnlineMessageMapper;
-import com.chanyun.entity.OnlineMessage;
 
 /**
- * 
- * @Description:用户数据操作服务层
- * @author liuyang
- * @data  2017-6-17 上午10:10:05
- *
+* <p>Title: UserService.java</p>  
+
+* <p>Description: 用户信息操作接口</p>  
+
+* <p>Copyright: Copyright (c) 2018 鑫票源商务资讯有限公司</p>  
+
+* <p>Company: www.xinpiaoyuan.com</p>  
+
+* @author liuyang  
+
+* @date 2018年9月26日 
+
+* @version 1.0
  */
-@Service
-public class UserService {
-	@Autowired
-	private OnlineMessageMapper userMapper;
+public interface UserService {
 	
 	/**
 	 * 添加用户信息
 	 * @param user
 	 * @return
 	 */
-	@Transactional(propagation=Propagation.REQUIRED)
-	public boolean add(OnlineMessage user){
-		int result = userMapper.insert(user);
-		if(result > 0) return true;
-		return false;
-	}
+	public User add(User user);
 	
 	/**
-	 * 查询用户
-	 * @param userName
-	 * @param userPwd
+	 * 编辑用户信息
+	 * @param user
 	 * @return
 	 */
-//	public boolean checkUserNameAndPassword(String userName,String userPwd){
-//		Map<String, String> params = new HashMap<String, String>();
-//		params.put("userName", userName);
-//		params.put("userPwd", userPwd);
-//		List<User> list= userMapper.selectByParams(params);
-//		if(null != list && list.size()>0) return true;
-//		return false;
-//	} 
+	public boolean edit(User user);
+	
+	/**
+	 * 查询用户信息
+	 * @param userId
+	 * @return
+	 */
+	public User queryUser(int userId);
+	
 }

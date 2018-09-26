@@ -30,7 +30,7 @@ import java.util.Map;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-@Api(description = "支付接口控制类")
+@Api(tags = "支付接口控制类")
 @RestController
 @RequestMapping("/pay")
 public class PaymentController {
