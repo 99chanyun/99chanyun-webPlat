@@ -1,5 +1,7 @@
 package com.chanyun.dao;
 
+import java.util.List;
+
 import com.chanyun.entity.Temple;
 import com.github.pagehelper.Page;
 
@@ -22,4 +24,10 @@ public interface TempleMapper {
      * @return
      */
     Page<Temple> selectByPage(Temple temple);
+    
+    /**
+     * 查询寺庙logo列表
+     * @return
+     */
+    List<Temple> selectTempleList();
 }

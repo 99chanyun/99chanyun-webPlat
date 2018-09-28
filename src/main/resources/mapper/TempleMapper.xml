@@ -213,4 +213,11 @@
   		</trim>
   </select>
   
+  <select id="selectTempleList" resultMap="BaseResultMap">
+  		select 
+  		id, temple_logo, temple_name
+  		from tb_temple
+  		where status = 1 order by create_time asc;
+  </select>
+  
 </mapper>

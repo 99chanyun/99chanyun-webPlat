@@ -10,8 +10,6 @@ import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.chanyun.interceptor.UrlInterceptor;
-
 /**
  * 返回静态页面 配制 类 -重写WebMvcConfigurerAdapter类中的addViewControllers 方法
  * 

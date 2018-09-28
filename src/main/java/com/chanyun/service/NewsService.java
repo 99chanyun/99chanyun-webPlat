@@ -66,4 +66,18 @@ public interface NewsService {
 	 * @return
 	 */
 	public List<News> queryIndexActivities();
+	
+	/**
+	 * 查询寺庙资讯信息
+	 * @param templeId
+	 * @return
+	 */
+	public List<News> queryNewsByTempleId(int templeId);
+	
+	/**
+	 * 根据资讯内容查询资讯内容
+	 * @param news
+	 * @return
+	 */
+	public List<News> queryNewsByTitle(String newsTitle);
 }

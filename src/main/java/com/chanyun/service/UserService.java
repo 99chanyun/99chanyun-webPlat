@@ -41,4 +41,11 @@ public interface UserService {
 	 */
 	public User queryUser(int userId);
 	
+	/**
+	 * 通过用户名密码查询用户信息
+	 * @param user
+	 * @return
+	 */
+	public User queryUserByUserAccountAndPassword(User user);
+	
 }

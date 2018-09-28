@@ -164,7 +164,6 @@
     		,
     		<include refid="Blob_Column_List" /> 
     		from tb_temple_monk where status = 1
-    		<trim prefixOverrides="and">
     			<if test="templeId != null and templeId != ''">
 			        and temple_id = #{templeId,jdbcType=INTEGER}
 			      </if>
@@ -189,7 +188,6 @@
 			      <if test="templeMonkIntroduce != null  and templeMonkIntroduce != ''">
 			        and temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
 			      </if>
-    		</trim>
     		order by sort asc,create_time desc limit 3
   </select>
   
@@ -199,7 +197,6 @@
     		,
     		<include refid="Blob_Column_List" /> 
     		from tb_temple_monk where status = 1
-    		<trim prefixOverrides="and">
     			<if test="templeId != null and templeId != ''">
 			        and temple_id = #{templeId,jdbcType=INTEGER}
 			      </if>
@@ -224,6 +221,5 @@
 			      <if test="templeMonkIntroduce != null  and templeMonkIntroduce != ''">
 			        and temple_monk_introduce = #{templeMonkIntroduce,jdbcType=LONGVARCHAR}
 			      </if>
-    		</trim>
   </select>
 </mapper>

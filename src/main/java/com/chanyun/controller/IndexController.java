@@ -37,7 +37,7 @@ import com.chanyun.service.NewsService;
  */
 @Api(tags="首页数据接口获取")
 @RestController
-@RequestMapping("/index")
+@RequestMapping("/api/index")
 public class IndexController extends BaseController{
 	@Autowired
 	private IndexBannerService bannerService;

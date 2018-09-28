@@ -263,12 +263,10 @@
   
   <select id="selectNewsByParams" parameterType="com.chanyun.entity.News" resultMap="ResultMapWithBLOBs">
   		select 
-  		<include refid="Base_Column_List" />
-    	,
-    	<include refid="Blob_Column_List" />
+  		id, news_title, news_description, news_img, create_time, news_templeid
   		 from tb_news where news_status != 99
   		 	  <if test="newsTitle != null">
-		         and news_title = #{newsTitle,jdbcType=VARCHAR}
+		         and news_title like '%' #{newsTitle,jdbcType=VARCHAR} '%'
 		      </if>
 		      <if test="newsDescription != null">
 		        and news_description = #{newsDescription,jdbcType=VARCHAR}

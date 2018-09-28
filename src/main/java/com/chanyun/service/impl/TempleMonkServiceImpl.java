@@ -1,5 +1,7 @@
 package com.chanyun.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,6 +45,14 @@ public class TempleMonkServiceImpl implements TempleMonkService {
 	public TempleMonk queryById(int monkId) {
 		TempleMonk monk = mapper.selectByPrimaryKey(monkId);
 		return monk;
+	}
+
+	@Override
+	public List<TempleMonk> queryByTempleId(int templeId) {
+		TempleMonk params = new TempleMonk();
+		params.setTempleId(templeId);
+		List<TempleMonk> result = mapper.selectByParams(params);
+		return result;
 	}
 
 }

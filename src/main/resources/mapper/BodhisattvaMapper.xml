@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chanyun.dao.BodhisattvaMapper">
+  <resultMap id="BaseResultMap" type="com.chanyun.entity.Bodhisattva">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="temple_id" jdbcType="INTEGER" property="templeId" />
+    <result column="temple_name" jdbcType="VARCHAR" property="templeName" />
+    <result column="bodhisattva_name" jdbcType="VARCHAR" property="bodhisattvaName" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="bodhisattva_status" jdbcType="INTEGER" property="bodhisattvaStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, temple_id, temple_name, bodhisattva_name, create_time, bodhisattva_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_bodhisattva
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_bodhisattva
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chanyun.entity.Bodhisattva">
+    insert into tb_bodhisattva (id, temple_id, temple_name, 
+      bodhisattva_name, create_time, bodhisattva_status
+      )
+    values (#{id,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeName,jdbcType=VARCHAR}, 
+      #{bodhisattvaName,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{bodhisattvaStatus,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.chanyun.entity.Bodhisattva">
+    insert into tb_bodhisattva
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="templeId != null">
+        temple_id,
+      </if>
+      <if test="templeName != null">
+        temple_name,
+      </if>
+      <if test="bodhisattvaName != null">
+        bodhisattva_name,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="bodhisattvaStatus != null">
+        bodhisattva_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templeId != null">
+        #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeName != null">
+        #{templeName,jdbcType=VARCHAR},
+      </if>
+      <if test="bodhisattvaName != null">
+        #{bodhisattvaName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bodhisattvaStatus != null">
+        #{bodhisattvaStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chanyun.entity.Bodhisattva">
+    update tb_bodhisattva
+    <set>
+      <if test="templeId != null">
+        temple_id = #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeName != null">
+        temple_name = #{templeName,jdbcType=VARCHAR},
+      </if>
+      <if test="bodhisattvaName != null">
+        bodhisattva_name = #{bodhisattvaName,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bodhisattvaStatus != null">
+        bodhisattva_status = #{bodhisattvaStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chanyun.entity.Bodhisattva">
+    update tb_bodhisattva
+    set temple_id = #{templeId,jdbcType=INTEGER},
+      temple_name = #{templeName,jdbcType=VARCHAR},
+      bodhisattva_name = #{bodhisattvaName,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      bodhisattva_status = #{bodhisattvaStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

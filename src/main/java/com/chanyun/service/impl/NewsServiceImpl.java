@@ -71,6 +71,22 @@ public class NewsServiceImpl implements NewsService {
 		List<News> newsList = mapper.selectNewsByParams(news);
 		return newsList;
 	}
+
+	@Override
+	public List<News> queryNewsByTempleId(int templeId) {
+		News news = new News();
+		news.setNewsTempleid(templeId);
+		List<News> newsList = mapper.selectNewsByParams(news);
+		return newsList;
+	}
+
+	@Override
+	public List<News> queryNewsByTitle(String newsTitle) {
+		News news = new News();
+		news.setNewsTitle(newsTitle);
+		List<News> result = mapper.selectNewsByParams(news);
+		return result;
+	}
 	
 	
 	

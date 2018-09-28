@@ -1,5 +1,6 @@
 package com.chanyun.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import com.chanyun.entity.User;
@@ -24,4 +25,11 @@ public interface UserMapper {
      * @return
      */
     Page<User> selectByPage(Map params);
+    
+    /**
+     * 条件查询用户信息
+     * @param user
+     * @return
+     */
+    List<User> selectByParams(User user);
 }

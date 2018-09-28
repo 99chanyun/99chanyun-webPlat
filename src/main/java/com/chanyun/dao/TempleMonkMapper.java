@@ -21,7 +21,7 @@ public interface TempleMonkMapper {
     int updateByPrimaryKey(TempleMonk record);
     
     /**
-     * 根据条件查询寺庙僧人列表
+     * 根据条件查询寺庙僧人列表,限制最多查询三个僧人数据
      * @param templeMonk
      * @return
      */

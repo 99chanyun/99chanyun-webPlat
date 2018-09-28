@@ -43,16 +43,16 @@ public class Merits {
     private String godName;
 	@ApiModelProperty(value="寺庙殿名",example="圆通宝殿")
     private String templeHouseName;
-	@ApiModelProperty(value="功德事件状态 0 申请 1未支付 2进行中 3完成 4未完成 5退款 9异常",example="0")
+	@ApiModelProperty(value="功德事件状态 0 申请 1未支付 2支付成功  3完成 4未完成 5退款 9异常",example="0")
     private Integer meritsStatus;
 	@ApiModelProperty(value="申请时间",example="2018-09-16 14:00")
     private Date applyTime;
 	@ApiModelProperty(value="完成时间",example="2018-09-17 14:00")
     private Date completionTime;
-	@ApiModelProperty(value="预留字段",example="",hidden=true)
-    private String var1;
-	@ApiModelProperty(value="预留字段",example="",hidden=true)
-    private String var2;
+	@ApiModelProperty(value="支付方式",example="weixin")
+    private String payType;
+	@ApiModelProperty(value="支付流水号",example="",hidden=true)
+    private String payNumber;
 
     public Integer getId() {
         return id;
@@ -222,19 +222,20 @@ public class Merits {
         this.completionTime = completionTime;
     }
 
-    public String getVar1() {
-        return var1;
-    }
+	public String getPayType() {
+		return payType;
+	}
 
-    public void setVar1(String var1) {
-        this.var1 = var1 == null ? null : var1.trim();
-    }
+	public String getPayNumber() {
+		return payNumber;
+	}
 
-    public String getVar2() {
-        return var2;
-    }
+	public void setPayType(String payType) {
+		this.payType = payType;
+	}
 
-    public void setVar2(String var2) {
-        this.var2 = var2 == null ? null : var2.trim();
-    }
+	public void setPayNumber(String payNumber) {
+		this.payNumber = payNumber;
+	}
+
 }

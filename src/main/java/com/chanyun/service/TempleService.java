@@ -1,5 +1,7 @@
 package com.chanyun.service;
 
+import java.util.List;
+
 import com.chanyun.common.PageInfo;
 import com.chanyun.entity.Temple;
 
@@ -49,5 +51,10 @@ public interface TempleService {
 	 */
 	public Temple queryById(int templeId);
 	
+	/**
+	 * 查询寺庙列表
+	 * @return
+	 */
+	public List<Temple> templeList();
 	
 }

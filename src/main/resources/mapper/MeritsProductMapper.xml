@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chanyun.dao.MeritsProductMapper">
+  <resultMap id="BaseResultMap" type="com.chanyun.entity.MeritsProduct">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="temple_id" jdbcType="INTEGER" property="templeId" />
+    <result column="temple_name" jdbcType="VARCHAR" property="templeName" />
+    <result column="merits_name" jdbcType="VARCHAR" property="meritsName" />
+    <result column="sale_price" jdbcType="DECIMAL" property="salePrice" />
+    <result column="settlement_price" jdbcType="DECIMAL" property="settlementPrice" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="merits_status" jdbcType="INTEGER" property="meritsStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, temple_id, temple_name, merits_name, sale_price, settlement_price, create_time, 
+    merits_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_merits_product
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_merits_product
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.chanyun.entity.MeritsProduct">
+    insert into tb_merits_product (id, temple_id, temple_name, 
+      merits_name, sale_price, settlement_price, 
+      create_time, merits_status)
+    values (#{id,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeName,jdbcType=VARCHAR}, 
+      #{meritsName,jdbcType=VARCHAR}, #{salePrice,jdbcType=DECIMAL}, #{settlementPrice,jdbcType=DECIMAL}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{meritsStatus,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chanyun.entity.MeritsProduct">
+    insert into tb_merits_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="templeId != null">
+        temple_id,
+      </if>
+      <if test="templeName != null">
+        temple_name,
+      </if>
+      <if test="meritsName != null">
+        merits_name,
+      </if>
+      <if test="salePrice != null">
+        sale_price,
+      </if>
+      <if test="settlementPrice != null">
+        settlement_price,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="meritsStatus != null">
+        merits_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="templeId != null">
+        #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeName != null">
+        #{templeName,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsName != null">
+        #{meritsName,jdbcType=VARCHAR},
+      </if>
+      <if test="salePrice != null">
+        #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementPrice != null">
+        #{settlementPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meritsStatus != null">
+        #{meritsStatus,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chanyun.entity.MeritsProduct">
+    update tb_merits_product
+    <set>
+      <if test="templeId != null">
+        temple_id = #{templeId,jdbcType=INTEGER},
+      </if>
+      <if test="templeName != null">
+        temple_name = #{templeName,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsName != null">
+        merits_name = #{meritsName,jdbcType=VARCHAR},
+      </if>
+      <if test="salePrice != null">
+        sale_price = #{salePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="settlementPrice != null">
+        settlement_price = #{settlementPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="meritsStatus != null">
+        merits_status = #{meritsStatus,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chanyun.entity.MeritsProduct">
+    update tb_merits_product
+    set temple_id = #{templeId,jdbcType=INTEGER},
+      temple_name = #{templeName,jdbcType=VARCHAR},
+      merits_name = #{meritsName,jdbcType=VARCHAR},
+      sale_price = #{salePrice,jdbcType=DECIMAL},
+      settlement_price = #{settlementPrice,jdbcType=DECIMAL},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      merits_status = #{meritsStatus,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

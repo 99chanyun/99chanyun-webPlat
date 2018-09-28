@@ -1,5 +1,7 @@
 package com.chanyun.service;
 
+import java.util.List;
+
 import com.chanyun.common.PageInfo;
 import com.chanyun.entity.Merits;
 
@@ -28,4 +30,31 @@ public interface MeritsService {
 	 * @return
 	 */
 	public PageInfo<Merits> findByPage(int pageNum, int pageSize,Merits merits);
+	
+	/**
+	 * 功德订单查询
+	 * @param meritsNumber 功德编号
+	 * @return
+	 */
+	public Merits queryMeritsByMeritsNumber(String meritsNumber);
+	
+	/**
+	 * 添加功德记录
+	 * @param merits
+	 * @return
+	 */
+	public Merits addMerits(Merits merits);
+	
+	/**
+	 * 修改功德记录状态
+	 * @param meritsStatus
+	 * @return
+	 */
+	public Merits updateStatusMerits(int meritsStatus,int id);
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public List<Merits> queryMeritsList();
 }

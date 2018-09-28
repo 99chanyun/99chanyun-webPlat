@@ -1,5 +1,7 @@
 package com.chanyun.dao;
 
+import java.util.List;
+
 import com.chanyun.entity.Merits;
 import com.github.pagehelper.Page;
 
@@ -22,6 +24,13 @@ public interface MeritsMapper {
      * @return
      */
     Page<Merits> selectByPage(Merits merits);
+    
+    /**
+     * 条件查询订单列表
+     * @param merits
+     * @return
+     */
+    List<Merits> selectByParams(Merits merits);
     
     
 }
