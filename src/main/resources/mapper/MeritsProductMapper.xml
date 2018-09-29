@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="temple_id" jdbcType="INTEGER" property="templeId" />
     <result column="temple_name" jdbcType="VARCHAR" property="templeName" />
+    <result column="merits_type" jdbcType="INTEGER" property="meritsType" />
     <result column="merits_name" jdbcType="VARCHAR" property="meritsName" />
     <result column="sale_price" jdbcType="DECIMAL" property="salePrice" />
     <result column="settlement_price" jdbcType="DECIMAL" property="settlementPrice" />
@@ -12,8 +13,8 @@
     <result column="merits_status" jdbcType="INTEGER" property="meritsStatus" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, temple_id, temple_name, merits_name, sale_price, settlement_price, create_time, 
-    merits_status
+    id, temple_id, temple_name, merits_type, merits_name, sale_price, settlement_price, 
+    create_time, merits_status
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -27,11 +28,13 @@
   </delete>
   <insert id="insert" parameterType="com.chanyun.entity.MeritsProduct">
     insert into tb_merits_product (id, temple_id, temple_name, 
-      merits_name, sale_price, settlement_price, 
-      create_time, merits_status)
+      merits_type, merits_name, sale_price, 
+      settlement_price, create_time, merits_status
+      )
     values (#{id,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeName,jdbcType=VARCHAR}, 
-      #{meritsName,jdbcType=VARCHAR}, #{salePrice,jdbcType=DECIMAL}, #{settlementPrice,jdbcType=DECIMAL}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{meritsStatus,jdbcType=INTEGER})
+      #{meritsType,jdbcType=INTEGER}, #{meritsName,jdbcType=VARCHAR}, #{salePrice,jdbcType=DECIMAL}, 
+      #{settlementPrice,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, #{meritsStatus,jdbcType=INTEGER}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.chanyun.entity.MeritsProduct">
     insert into tb_merits_product
@@ -44,6 +47,9 @@
       </if>
       <if test="templeName != null">
         temple_name,
+      </if>
+      <if test="meritsType != null">
+        merits_type,
       </if>
       <if test="meritsName != null">
         merits_name,
@@ -71,6 +77,9 @@
       <if test="templeName != null">
         #{templeName,jdbcType=VARCHAR},
       </if>
+      <if test="meritsType != null">
+        #{meritsType,jdbcType=INTEGER},
+      </if>
       <if test="meritsName != null">
         #{meritsName,jdbcType=VARCHAR},
       </if>
@@ -97,6 +106,9 @@
       <if test="templeName != null">
         temple_name = #{templeName,jdbcType=VARCHAR},
       </if>
+      <if test="meritsType != null">
+        merits_type = #{meritsType,jdbcType=INTEGER},
+      </if>
       <if test="meritsName != null">
         merits_name = #{meritsName,jdbcType=VARCHAR},
       </if>
@@ -119,6 +131,7 @@
     update tb_merits_product
     set temple_id = #{templeId,jdbcType=INTEGER},
       temple_name = #{templeName,jdbcType=VARCHAR},
+      merits_type = #{meritsType,jdbcType=INTEGER},
       merits_name = #{meritsName,jdbcType=VARCHAR},
       sale_price = #{salePrice,jdbcType=DECIMAL},
       settlement_price = #{settlementPrice,jdbcType=DECIMAL},
@@ -126,4 +139,35 @@
       merits_status = #{meritsStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryByParams" parameterType="com.chanyun.entity.MeritsProduct" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_merits_product
+    where merits_status = 1
+    <if test="templeId != null">
+       and temple_id = #{templeId,jdbcType=INTEGER}
+      </if>
+      <if test="templeName != null and templeName != ''">
+       and  temple_name = #{templeName,jdbcType=VARCHAR}
+      </if>
+      <if test="meritsType != null ">
+       and  merits_type = #{meritsType,jdbcType=INTEGER}
+      </if>
+      <if test="meritsName != null and meritsName != '' ">
+       and merits_name = #{meritsName,jdbcType=VARCHAR}
+      </if>
+      <if test="salePrice != null">
+       and sale_price = #{salePrice,jdbcType=DECIMAL}
+      </if>
+      <if test="settlementPrice != null">
+       and settlement_price = #{settlementPrice,jdbcType=DECIMAL}
+      </if>
+      <if test="createTime != null">
+       and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="meritsStatus != null">
+       and merits_status = #{meritsStatus,jdbcType=INTEGER}
+      </if>	
+  </select>
 </mapper>

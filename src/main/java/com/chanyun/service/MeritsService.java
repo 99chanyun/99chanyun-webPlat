@@ -56,5 +56,5 @@ public interface MeritsService {
 	 * 
 	 * @return
 	 */
-	public List<Merits> queryMeritsList();
+	public List<Merits> queryMeritsListForProductPage();
 }

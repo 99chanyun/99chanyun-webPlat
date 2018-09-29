@@ -9,6 +9,8 @@ public class MeritsProduct {
 
     private String templeName;
 
+    private Integer meritsType;
+
     private String meritsName;
 
     private Long salePrice;
@@ -41,6 +43,14 @@ public class MeritsProduct {
 
     public void setTempleName(String templeName) {
         this.templeName = templeName == null ? null : templeName.trim();
+    }
+
+    public Integer getMeritsType() {
+        return meritsType;
+    }
+
+    public void setMeritsType(Integer meritsType) {
+        this.meritsType = meritsType;
     }
 
     public String getMeritsName() {

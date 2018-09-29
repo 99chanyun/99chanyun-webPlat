@@ -32,5 +32,11 @@ public interface MeritsMapper {
      */
     List<Merits> selectByParams(Merits merits);
     
+    /**
+     * 项目列表页面功德列表查询
+     * @return
+     */
+    List<Merits> selectMeritsListForProductPage();
+    
     
 }

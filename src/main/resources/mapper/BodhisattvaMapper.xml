@@ -103,4 +103,26 @@
       bodhisattva_status = #{bodhisattvaStatus,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  
+  <select id="queryByParams" parameterType="com.chanyun.entity.Bodhisattva" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_bodhisattva
+    where bodhisattva_status = 1
+      <if test="templeId != null">
+       and temple_id = #{templeId,jdbcType=INTEGER}
+      </if>
+      <if test="templeName != null and templeName != '' ">
+       and temple_name = #{templeName,jdbcType=VARCHAR}
+      </if>
+      <if test="bodhisattvaName != null and bodhisattvaName != '' ">
+       and bodhisattva_name = #{bodhisattvaName,jdbcType=VARCHAR}
+      </if>
+      <if test="createTime != null ">
+       and create_time = #{createTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="bodhisattvaStatus != null">
+       and bodhisattva_status = #{bodhisattvaStatus,jdbcType=INTEGER}
+      </if>
+  </select>
 </mapper>

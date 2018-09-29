@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,12 +39,17 @@ public class UserController extends BaseController{
 	public BaseResult<User> login(@RequestBody User user, HttpServletRequest request){
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
-		if(null != userId || 0 != userId ){ //用户已经登陆过了
+		if(null != userId ){ //用户已经登陆过了
 			return result(Constants.RESULT_CODE_SUCCESS, "用户已登陆", null);
 		}
+		if(null == user.getUserAccount() || "".equals(user.getUserAccount()))
+			return result(Constants.RESULT_CODE_CHECK_FAIL, "用户名不能为空", null);
+		
+		if(null == user.getUserPassword() || "".equals(user.getUserPassword()))
+			return result(Constants.RESULT_CODE_CHECK_FAIL, "密码不能为空", null);
 		User params = new User();
 		params.setUserAccount(user.getUserAccount());
-		params.setUserPassword(user.getUserName());
+		params.setUserPassword(user.getUserPassword());
 		User result = userService.queryUserByUserAccountAndPassword(params);
 		if(null == result){
 			return result(Constants.RESULT_CODE_CHECK_FAIL, "登陆失败，用户名密码不对", null);

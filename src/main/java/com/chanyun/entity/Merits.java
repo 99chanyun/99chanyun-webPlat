@@ -7,7 +7,7 @@ import java.util.Date;
 
 @ApiModel("用户功德(订单)信息")
 public class Merits {
-	@ApiModelProperty(value="功德id",readOnly=true,example="")
+	@ApiModelProperty(value="功德id",readOnly=true)
     private Integer id;
 	@ApiModelProperty(value="功德编号",example="GD201809161312000001")
     private String meritsNumber;
@@ -31,7 +31,7 @@ public class Merits {
     private String customerAddressArea;
 	@ApiModelProperty(value="功德人地址-街道地址",example="惠南镇城西路118号")
     private String customerAddress;
-	@ApiModelProperty(value="功德类型",example="1")
+	@ApiModelProperty(value="功德类型  1请香  2 供佛灯  3 许愿    4忏悔  ",example="1")
     private Integer meritsType;
 	@ApiModelProperty(value="功德名称",example="请财富香")
     private String meritsName;
@@ -39,6 +39,8 @@ public class Merits {
     private Integer meritsAccount;
 	@ApiModelProperty(value="寺庙id",example="1")
     private Integer templeId;
+	@ApiModelProperty(value="寺庙名称",example="浦东小普陀寺")
+	private String templeName;
 	@ApiModelProperty(value="菩萨名称",example="观音大士")
     private String godName;
 	@ApiModelProperty(value="寺庙殿名",example="圆通宝殿")
@@ -238,4 +240,14 @@ public class Merits {
 		this.payNumber = payNumber;
 	}
 
+	public String getTempleName() {
+		return templeName;
+	}
+
+	public void setTempleName(String templeName) {
+		this.templeName = templeName;
+	}
+
+	
+	
 }

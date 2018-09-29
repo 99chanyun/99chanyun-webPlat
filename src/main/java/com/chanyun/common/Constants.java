@@ -90,4 +90,24 @@ public class Constants {
 	 * 订单编号前缀
 	 */
 	public final static String MERITS_NUMBER_PREFIX="GD";
+	
+	/**
+	 * 功德项目 请香
+	 */
+	public final static int MERITS_TYPE_INCENSE=1;
+	
+	/**
+	 * 功德项目 佛灯
+	 */
+	public final static int MERITS_TYPE_LAMP=2;
+	
+	/**
+	 * 功德项目 许愿 
+	 */
+	public final static int MERITS_TYPE_DESIRE=3;
+	
+	/**
+	 * 功德项目 忏悔
+	 */
+	public final static int MERITS_TYPE_CONFESSION=4;
 }

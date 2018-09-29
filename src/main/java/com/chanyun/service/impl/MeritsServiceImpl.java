@@ -48,8 +48,9 @@ public class MeritsServiceImpl implements MeritsService{
 		return null;
 	}
 	
-	public List<Merits> queryMeritsList(){
-		return null;
+	public List<Merits> queryMeritsListForProductPage(){
+		List<Merits> result = meritsMapper.selectMeritsListForProductPage();
+		return result;
 	}
 
 }

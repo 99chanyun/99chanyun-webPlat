@@ -163,7 +163,7 @@
         and user_account = #{userAccount,jdbcType=VARCHAR}
       </if>
       <if test="userPassword != null  and userPassword != ''">
-        and user_password = #{userPassword,jdbcType=VARCHAR}
+        and user_password = MD5(#{userPassword,jdbcType=VARCHAR})
       </if>
       <if test="userPhone != null  and userPhone != ''">
         and user_phone = #{userPhone,jdbcType=VARCHAR}
@@ -188,7 +188,7 @@
   
   <select id="selectByParams" parameterType="com.chanyun.entity.User" resultMap="BaseResultMap">
   	 select 
-    	user_account,user_phone,user_name,merits_account,last_login_time
+    	id,user_account,user_phone,user_name,merits_account,last_login_time
     from tb_user
     <trim prefix="where" prefixOverrides="and">
       <if test="userName != null and userName!= ''">
@@ -198,7 +198,7 @@
         and user_account = #{userAccount,jdbcType=VARCHAR}
       </if>
       <if test="userPassword != null  and userPassword != ''">
-        and user_password = #{userPassword,jdbcType=VARCHAR}
+        and user_password = MD5(#{userPassword,jdbcType=VARCHAR})
       </if>
       <if test="userPhone != null  and userPhone != ''">
         and user_phone = #{userPhone,jdbcType=VARCHAR}

@@ -6,24 +6,29 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.chanyun.common.BaseResult;
 import com.chanyun.common.Constants;
 import com.chanyun.common.util.CreateNoUtil;
 import com.chanyun.entity.Merits;
-import com.chanyun.entity.User;
 import com.chanyun.service.MeritsService;
 import com.chanyun.service.UserService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
-@Api("功德项目订单类")
+@Api(tags="功德项目订单类")
 @RestController
 @RequestMapping("/api/user/merits")
+@Slf4j
 public class MeritsController extends BaseController {
 	
 	@Autowired
@@ -32,7 +37,12 @@ public class MeritsController extends BaseController {
 	private UserService userService;
 	
 	
-	public BaseResult<Merits> addMerits(@RequestBody Merits merits, HttpServletRequest request){
+	@SuppressWarnings("unchecked")
+	@ApiOperation("用户功德订单提交")
+	@PostMapping("applyMerits")
+	@ResponseBody
+	public BaseResult<Merits> applyMerits(@RequestBody Merits merits, HttpServletRequest request){
+		log.info("------------------进入功德事件提交---------------");
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
 		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
@@ -41,15 +51,19 @@ public class MeritsController extends BaseController {
 		merits.setMeritsStatus(Constants.MERITS_STATUS_APPLY);
 		merits.setUserId(userId);
 		merits.setMeritsNumber(Constants.MERITS_NUMBER_PREFIX+CreateNoUtil.createNo());
+		log.info("--------------------功德事件入库----------------------------功德事件编号"+merits.getMeritsNumber());
 		Merits result = meritsService.addMerits(merits);
 		if(null == result) return result(Constants.RESULT_CODE_FAIL, "订单提交失败", result);
 		return result(Constants.RESULT_CODE_SUCCESS, "订单提交成功", result);
 	}
 	
-	
-	public BaseResult<List<Merits>> meritsList(){
-		meritsService.
-		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", null);
+	@SuppressWarnings("unchecked")
+	@ApiOperation("功德项目页面功德订单查询")
+	@PostMapping("meritsListForProductPage")
+	@ResponseBody
+	public BaseResult<List<Merits>> meritsListForProductPage(){
+		List<Merits> result = meritsService.queryMeritsListForProductPage();
+		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
 	}
 	
 	

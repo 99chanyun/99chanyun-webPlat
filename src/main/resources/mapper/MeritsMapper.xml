@@ -18,6 +18,7 @@
     <result column="merits_name" jdbcType="VARCHAR" property="meritsName" />
     <result column="merits_account" jdbcType="INTEGER" property="meritsAccount" />
     <result column="temple_id" jdbcType="INTEGER" property="templeId" />
+    <result column="temple_name" jdbcType="INTEGER" property="templeName" />
     <result column="god_name" jdbcType="VARCHAR" property="godName" />
     <result column="temple_house_name" jdbcType="VARCHAR" property="templeHouseName" />
     <result column="merits_status" jdbcType="INTEGER" property="meritsStatus" />
@@ -29,7 +30,7 @@
   <sql id="Base_Column_List">
     id, merits_number, user_id, customer_name, customer_year, customer_month, customer_day, 
     customer_hour, customer_address_province, customer_address_city, customer_address_area, 
-    customer_address, merits_type, merits_name, merits_account, temple_id, god_name, 
+    customer_address, merits_type, merits_name, merits_account, temple_id,temple_name, god_name, 
     temple_house_name, merits_status, apply_time, completion_time, pay_type, pay_number
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -48,7 +49,7 @@
       customer_day, customer_hour, customer_address_province, 
       customer_address_city, customer_address_area, 
       customer_address, merits_type, merits_name, 
-      merits_account, temple_id, god_name, 
+      merits_account, temple_id,temple_name god_name, 
       temple_house_name, merits_status, apply_time, 
       completion_time, pay_type, pay_number
       )
@@ -57,7 +58,7 @@
       #{customerDay,jdbcType=INTEGER}, #{customerHour,jdbcType=VARCHAR}, #{customerAddressProvince,jdbcType=VARCHAR}, 
       #{customerAddressCity,jdbcType=VARCHAR}, #{customerAddressArea,jdbcType=VARCHAR}, 
       #{customerAddress,jdbcType=VARCHAR}, #{meritsType,jdbcType=INTEGER}, #{meritsName,jdbcType=VARCHAR}, 
-      #{meritsAccount,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{godName,jdbcType=VARCHAR}, 
+      #{meritsAccount,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeName,jdbcType=VARCHAR}, #{godName,jdbcType=VARCHAR}, 
       #{templeHouseName,jdbcType=VARCHAR}, #{meritsStatus,jdbcType=INTEGER}, #{applyTime,jdbcType=TIMESTAMP}, 
       #{completionTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=VARCHAR}, #{payNumber,jdbcType=VARCHAR}
       )
@@ -112,6 +113,9 @@
       </if>
       <if test="templeId != null">
         temple_id,
+      </if>
+      <if test="templeName != null and templeName != ''">
+        temple_name,
       </if>
       <if test="godName != null">
         god_name,
@@ -184,6 +188,9 @@
       <if test="templeId != null">
         #{templeId,jdbcType=INTEGER},
       </if>
+      <if test="templeName != null and templeName != ''">
+        #{templeName,jdbcType=VARCHAR},
+      </if>
       <if test="godName != null">
         #{godName,jdbcType=VARCHAR},
       </if>
@@ -255,6 +262,9 @@
       <if test="templeId != null">
         temple_id = #{templeId,jdbcType=INTEGER},
       </if>
+      <if test="templeName != null">
+        temple_name = #{templeName,jdbcType=VARCHAR},
+      </if>
       <if test="godName != null">
         god_name = #{godName,jdbcType=VARCHAR},
       </if>
@@ -296,6 +306,7 @@
       merits_name = #{meritsName,jdbcType=VARCHAR},
       merits_account = #{meritsAccount,jdbcType=INTEGER},
       temple_id = #{templeId,jdbcType=INTEGER},
+      temple_name = #{templeName,jdbcType=VARCHAR},
       god_name = #{godName,jdbcType=VARCHAR},
       temple_house_name = #{templeHouseName,jdbcType=VARCHAR},
       merits_status = #{meritsStatus,jdbcType=INTEGER},
@@ -353,8 +364,11 @@
       <if test="meritsAccount != null and meritsAccount !=''">
         and merits_account = #{meritsAccount,jdbcType=INTEGER}
       </if>
-      <if test="templeId != null and templeId !=''">
+      <if test="templeId != null ">
         and temple_id = #{templeId,jdbcType=INTEGER}
+      </if>
+      <if test="templeName != null and templeName !=''">
+        and temple_name = #{templeName,jdbcType=VARCHAR}
       </if>
       <if test="godName != null and godName !=''">
         and god_name = #{godName,jdbcType=VARCHAR}
@@ -427,8 +441,11 @@
       <if test="meritsAccount != null and meritsAccount !=''">
         and merits_account = #{meritsAccount,jdbcType=INTEGER}
       </if>
-      <if test="templeId != null and templeId !=''">
+      <if test="templeId != null ">
         and temple_id = #{templeId,jdbcType=INTEGER}
+      </if>
+      <if test="templeName != null and templeName !=''">
+        and temple_name = #{templeName,jdbcType=VARCHAR}
       </if>
       <if test="godName != null and godName !=''">
         and god_name = #{godName,jdbcType=VARCHAR}
@@ -453,4 +470,9 @@
       </if>
     </trim>
   </select>
+  
+  <select id="selectMeritsListForProductPage" resultMap="BaseResultMap">
+  		select id, merits_number, user_id, customer_name, merits_name, merits_account, temple_name from tb_merits limit 10
+  </select>
+  
 </mapper>
