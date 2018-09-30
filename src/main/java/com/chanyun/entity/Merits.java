@@ -3,6 +3,7 @@ package com.chanyun.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @ApiModel("用户功德(订单)信息")
@@ -15,6 +16,8 @@ public class Merits {
     private Integer userId;
 	@ApiModelProperty(value="功德人姓名",example="张三")
     private String customerName;
+	@ApiModelProperty("功德人年龄")
+	private Integer customerAge;
 	@ApiModelProperty(value="功德人年龄-年",example="1980")
     private Integer customerYear;
 	@ApiModelProperty(value="功德人年龄-月",example="02")
@@ -31,12 +34,14 @@ public class Merits {
     private String customerAddressArea;
 	@ApiModelProperty(value="功德人地址-街道地址",example="惠南镇城西路118号")
     private String customerAddress;
+	@ApiModelProperty(value="功德产品id",example ="1")
+	private Integer meritsProductId;
 	@ApiModelProperty(value="功德类型  1请香  2 供佛灯  3 许愿    4忏悔  ",example="1")
     private Integer meritsType;
 	@ApiModelProperty(value="功德名称",example="请财富香")
     private String meritsName;
 	@ApiModelProperty(value="功德数量",example="18")
-    private Integer meritsAccount;
+    private BigDecimal meritsAccount;
 	@ApiModelProperty(value="寺庙id",example="1")
     private Integer templeId;
 	@ApiModelProperty(value="寺庙名称",example="浦东小普陀寺")
@@ -168,15 +173,16 @@ public class Merits {
         this.meritsName = meritsName == null ? null : meritsName.trim();
     }
 
-    public Integer getMeritsAccount() {
-        return meritsAccount;
-    }
 
-    public void setMeritsAccount(Integer meritsAccount) {
-        this.meritsAccount = meritsAccount;
-    }
+    public BigDecimal getMeritsAccount() {
+		return meritsAccount;
+	}
 
-    public Integer getTempleId() {
+	public void setMeritsAccount(BigDecimal meritsAccount) {
+		this.meritsAccount = meritsAccount;
+	}
+
+	public Integer getTempleId() {
         return templeId;
     }
 
@@ -248,6 +254,21 @@ public class Merits {
 		this.templeName = templeName;
 	}
 
-	
+	public Integer getMeritsProductId() {
+		return meritsProductId;
+	}
+
+	public void setMeritsProductId(Integer meritsProductId) {
+		this.meritsProductId = meritsProductId;
+	}
+
+	public Integer getCustomerAge() {
+		return customerAge;
+	}
+
+	public void setCustomerAge(Integer customerAge) {
+		this.customerAge = customerAge;
+	}
+
 	
 }

@@ -41,4 +41,10 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
+	@Override
+	public List<User> queryMeritsUserList() {
+		List<User> result = userMapper.selectByMerits();
+		return result;
+	}
+
 }

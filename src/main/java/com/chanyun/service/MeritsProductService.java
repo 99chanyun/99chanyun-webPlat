@@ -29,4 +29,11 @@ public interface MeritsProductService {
 	 */
 	public List<MeritsProduct> queryMeritsByTempleIdAndType(int meritsType, int templeId);
 	
+	/**
+	 * 
+	 * @param id
+	 * @return
+	 */
+	public MeritsProduct queryById(int id);
+	
 }

@@ -1,5 +1,7 @@
 package com.chanyun.service;
 
+import java.util.List;
+
 import com.chanyun.entity.User;
 
 
@@ -48,4 +50,9 @@ public interface UserService {
 	 */
 	public User queryUserByUserAccountAndPassword(User user);
 	
+	/**
+	 * 查询功德榜数据
+	 * @return
+	 */
+	public List<User> queryMeritsUserList();
 }

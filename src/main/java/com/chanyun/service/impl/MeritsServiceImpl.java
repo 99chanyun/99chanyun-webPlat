@@ -52,5 +52,26 @@ public class MeritsServiceImpl implements MeritsService{
 		List<Merits> result = meritsMapper.selectMeritsListForProductPage();
 		return result;
 	}
+	@Override
+	public Merits queryById(int meritsId) {
+		Merits merits = meritsMapper.selectByPrimaryKey(meritsId);
+		return merits;
+	}
+	@Override
+	public Merits updateMerits(Merits merits) {
+		int i = meritsMapper.updateByPrimaryKeySelective(merits);
+		if(i > 0) return merits;
+		return null;
+	}
+	@Override
+	public PageInfo<Merits> queryMeritsListForUserPage(int pageNum, int pageSize, int userId) {
+		PageHelper.startPage(pageNum,pageSize);
+		PageHelper.orderBy("apply_time desc");
+		Merits params = new Merits();
+		params.setUserId(userId);
+		Page<Merits> sqlResult = meritsMapper.selectByPage(params);
+		PageInfo<Merits> result = new PageInfo<Merits>(sqlResult);
+		return result;
+	}
 
 }

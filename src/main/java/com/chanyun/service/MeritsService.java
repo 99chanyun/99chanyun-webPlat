@@ -53,8 +53,29 @@ public interface MeritsService {
 	public Merits updateStatusMerits(int meritsStatus,int id);
 	
 	/**
+	 * 修改功德记录
+	 * @param meritsStatus
+	 * @return
+	 */
+	public Merits updateMerits(Merits merits);
+	
+	
+	/**
 	 * 
 	 * @return
 	 */
 	public List<Merits> queryMeritsListForProductPage();
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public PageInfo<Merits> queryMeritsListForUserPage(int pageNum, int pageSize,int userId);
+	
+	/**
+	 * 根据id查询订单
+	 * @param meritsId
+	 * @return
+	 */
+	public Merits queryById(int meritsId);
 }

@@ -220,4 +220,10 @@
       </if>
     </trim>
   </select>
+  
+  <select id="selectByMerits" resultMap="BaseResultMap">
+  	select 
+    	id,user_name,merits_account
+    from tb_user where merits_account > 0  order by merits_account desc limit 50;
+  </select>
 </mapper>

@@ -32,4 +32,10 @@ public interface UserMapper {
      * @return
      */
     List<User> selectByParams(User user);
+    
+    /**
+     * 查询用户功德榜
+     * @return
+     */
+    List<User> selectByMerits();
 }

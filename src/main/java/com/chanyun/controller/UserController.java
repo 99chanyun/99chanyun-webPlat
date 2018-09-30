@@ -81,4 +81,5 @@ public class UserController extends BaseController{
 		return result(Constants.RESULT_CODE_SUCCESS, "退出登陆成功", null);
 	}
 	
+	
 }

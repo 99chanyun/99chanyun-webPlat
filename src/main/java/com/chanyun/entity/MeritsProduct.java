@@ -1,5 +1,6 @@
 package com.chanyun.entity;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class MeritsProduct {
@@ -13,9 +14,9 @@ public class MeritsProduct {
 
     private String meritsName;
 
-    private Long salePrice;
+    private BigDecimal salePrice;
 
-    private Long settlementPrice;
+    private BigDecimal settlementPrice;
 
     private Date createTime;
 
@@ -61,19 +62,19 @@ public class MeritsProduct {
         this.meritsName = meritsName == null ? null : meritsName.trim();
     }
 
-    public Long getSalePrice() {
+    public BigDecimal getSalePrice() {
         return salePrice;
     }
 
-    public void setSalePrice(Long salePrice) {
+    public void setSalePrice(BigDecimal salePrice) {
         this.salePrice = salePrice;
     }
 
-    public Long getSettlementPrice() {
+    public BigDecimal getSettlementPrice() {
         return settlementPrice;
     }
 
-    public void setSettlementPrice(Long settlementPrice) {
+    public void setSettlementPrice(BigDecimal settlementPrice) {
         this.settlementPrice = settlementPrice;
     }
 

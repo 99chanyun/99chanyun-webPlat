@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chanyun.common.BaseResult;
 import com.chanyun.common.Constants;
+import com.chanyun.common.PageInfo;
+import com.chanyun.common.QueryParams;
 import com.chanyun.common.util.CreateNoUtil;
 import com.chanyun.entity.Merits;
+import com.chanyun.entity.MeritsProduct;
+import com.chanyun.service.MeritsProductService;
 import com.chanyun.service.MeritsService;
 import com.chanyun.service.UserService;
 
@@ -36,6 +40,9 @@ public class MeritsController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
+	@Autowired
+	private MeritsProductService meritsProductService;
+	
 	
 	@SuppressWarnings("unchecked")
 	@ApiOperation("用户功德订单提交")
@@ -51,6 +58,13 @@ public class MeritsController extends BaseController {
 		merits.setMeritsStatus(Constants.MERITS_STATUS_APPLY);
 		merits.setUserId(userId);
 		merits.setMeritsNumber(Constants.MERITS_NUMBER_PREFIX+CreateNoUtil.createNo());
+		MeritsProduct meritsProduct = meritsProductService.queryById(merits.getMeritsProductId());
+		if(null == meritsProduct){
+			log.info("功德项目不存在====id: "+merits.getMeritsProductId());
+			return result(Constants.RESULT_CODE_CHECK_FAIL, "功德项目不存在", null);
+		}
+		merits.setMeritsName(meritsProduct.getMeritsName());
+		merits.setMeritsType(meritsProduct.getMeritsType());
 		log.info("--------------------功德事件入库----------------------------功德事件编号"+merits.getMeritsNumber());
 		Merits result = meritsService.addMerits(merits);
 		if(null == result) return result(Constants.RESULT_CODE_FAIL, "订单提交失败", result);
@@ -63,6 +77,19 @@ public class MeritsController extends BaseController {
 	@ResponseBody
 	public BaseResult<List<Merits>> meritsListForProductPage(){
 		List<Merits> result = meritsService.queryMeritsListForProductPage();
+		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@ApiOperation("用户功德簿查询")
+	@PostMapping("orderList")
+	@ResponseBody
+	public BaseResult<PageInfo<Merits>> meritsListForUserPage(@RequestBody QueryParams<Merits> params, HttpServletRequest request){
+		HttpSession session = request.getSession();
+		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
+		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
+		PageInfo<Merits> result = meritsService.queryMeritsListForUserPage(params.getPageNum(), params.getPageSize(), userId);
 		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
 	}
 	

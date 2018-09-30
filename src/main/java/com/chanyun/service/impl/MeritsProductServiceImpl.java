@@ -24,4 +24,10 @@ public class MeritsProductServiceImpl implements MeritsProductService {
 		return result;
 	}
 
+	@Override
+	public MeritsProduct queryById(int id) {
+		MeritsProduct result = mapper.selectByPrimaryKey(id);
+		return result;
+	}
+
 }

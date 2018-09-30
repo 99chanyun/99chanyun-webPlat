@@ -6,6 +6,7 @@
     <result column="merits_number" jdbcType="VARCHAR" property="meritsNumber" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+    <result column="customer_age" jdbcType="INTEGER" property="customerAge" />
     <result column="customer_year" jdbcType="INTEGER" property="customerYear" />
     <result column="customer_month" jdbcType="INTEGER" property="customerMonth" />
     <result column="customer_day" jdbcType="INTEGER" property="customerDay" />
@@ -14,11 +15,11 @@
     <result column="customer_address_city" jdbcType="VARCHAR" property="customerAddressCity" />
     <result column="customer_address_area" jdbcType="VARCHAR" property="customerAddressArea" />
     <result column="customer_address" jdbcType="VARCHAR" property="customerAddress" />
+    <result column="merits_product_id" jdbcType="INTEGER" property="meritsProductId" />
     <result column="merits_type" jdbcType="INTEGER" property="meritsType" />
     <result column="merits_name" jdbcType="VARCHAR" property="meritsName" />
     <result column="merits_account" jdbcType="INTEGER" property="meritsAccount" />
     <result column="temple_id" jdbcType="INTEGER" property="templeId" />
-    <result column="temple_name" jdbcType="INTEGER" property="templeName" />
     <result column="god_name" jdbcType="VARCHAR" property="godName" />
     <result column="temple_house_name" jdbcType="VARCHAR" property="templeHouseName" />
     <result column="merits_status" jdbcType="INTEGER" property="meritsStatus" />
@@ -28,10 +29,11 @@
     <result column="pay_number" jdbcType="VARCHAR" property="payNumber" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, merits_number, user_id, customer_name, customer_year, customer_month, customer_day, 
+    id, merits_number, user_id, customer_name, customer_age, customer_year, customer_month, customer_day, 
     customer_hour, customer_address_province, customer_address_city, customer_address_area, 
-    customer_address, merits_type, merits_name, merits_account, temple_id,temple_name, god_name, 
-    temple_house_name, merits_status, apply_time, completion_time, pay_type, pay_number
+    customer_address, merits_product_id, merits_type, merits_name, merits_account, temple_id, 
+    god_name, temple_house_name, merits_status, apply_time, completion_time, pay_type, 
+    pay_number
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -44,24 +46,24 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.Merits">
-    insert into tb_merits (id, merits_number, user_id, 
+    insert into tb_merits (id, merits_number, user_id, customer_age,
       customer_name, customer_year, customer_month, 
       customer_day, customer_hour, customer_address_province, 
       customer_address_city, customer_address_area, 
-      customer_address, merits_type, merits_name, 
-      merits_account, temple_id,temple_name god_name, 
-      temple_house_name, merits_status, apply_time, 
-      completion_time, pay_type, pay_number
-      )
+      customer_address, merits_product_id, merits_type, 
+      merits_name, merits_account, temple_id, 
+      god_name, temple_house_name, merits_status, 
+      apply_time, completion_time, pay_type, 
+      pay_number)
     values (#{id,jdbcType=INTEGER}, #{meritsNumber,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, 
-      #{customerName,jdbcType=VARCHAR}, #{customerYear,jdbcType=INTEGER}, #{customerMonth,jdbcType=INTEGER}, 
+      #{customerName,jdbcType=VARCHAR}, #{customerAge,jdbcType=INTEGER}, #{customerYear,jdbcType=INTEGER}, #{customerMonth,jdbcType=INTEGER}, 
       #{customerDay,jdbcType=INTEGER}, #{customerHour,jdbcType=VARCHAR}, #{customerAddressProvince,jdbcType=VARCHAR}, 
       #{customerAddressCity,jdbcType=VARCHAR}, #{customerAddressArea,jdbcType=VARCHAR}, 
-      #{customerAddress,jdbcType=VARCHAR}, #{meritsType,jdbcType=INTEGER}, #{meritsName,jdbcType=VARCHAR}, 
-      #{meritsAccount,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, #{templeName,jdbcType=VARCHAR}, #{godName,jdbcType=VARCHAR}, 
-      #{templeHouseName,jdbcType=VARCHAR}, #{meritsStatus,jdbcType=INTEGER}, #{applyTime,jdbcType=TIMESTAMP}, 
-      #{completionTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=VARCHAR}, #{payNumber,jdbcType=VARCHAR}
-      )
+      #{customerAddress,jdbcType=VARCHAR}, #{meritsProductId,jdbcType=INTEGER}, #{meritsType,jdbcType=INTEGER}, 
+      #{meritsName,jdbcType=VARCHAR}, #{meritsAccount,jdbcType=INTEGER}, #{templeId,jdbcType=INTEGER}, 
+      #{godName,jdbcType=VARCHAR}, #{templeHouseName,jdbcType=VARCHAR}, #{meritsStatus,jdbcType=INTEGER}, 
+      #{applyTime,jdbcType=TIMESTAMP}, #{completionTime,jdbcType=TIMESTAMP}, #{payType,jdbcType=VARCHAR}, 
+      #{payNumber,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.Merits">
     insert into tb_merits
@@ -77,6 +79,9 @@
       </if>
       <if test="customerName != null">
         customer_name,
+      </if>
+      <if test="customerAge != null">
+        customer_age,
       </if>
       <if test="customerYear != null">
         customer_year,
@@ -102,6 +107,9 @@
       <if test="customerAddress != null">
         customer_address,
       </if>
+      <if test="meritsProductId != null">
+        merits_product_id,
+      </if>
       <if test="meritsType != null">
         merits_type,
       </if>
@@ -113,9 +121,6 @@
       </if>
       <if test="templeId != null">
         temple_id,
-      </if>
-      <if test="templeName != null and templeName != ''">
-        temple_name,
       </if>
       <if test="godName != null">
         god_name,
@@ -152,6 +157,9 @@
       <if test="customerName != null">
         #{customerName,jdbcType=VARCHAR},
       </if>
+      <if test="customerAge != null">
+        #{customerAge,jdbcType=INTEGER},
+      </if>
       <if test="customerYear != null">
         #{customerYear,jdbcType=INTEGER},
       </if>
@@ -176,6 +184,9 @@
       <if test="customerAddress != null">
         #{customerAddress,jdbcType=VARCHAR},
       </if>
+      <if test="meritsProductId != null">
+        #{meritsProductId,jdbcType=INTEGER},
+      </if>
       <if test="meritsType != null">
         #{meritsType,jdbcType=INTEGER},
       </if>
@@ -187,9 +198,6 @@
       </if>
       <if test="templeId != null">
         #{templeId,jdbcType=INTEGER},
-      </if>
-      <if test="templeName != null and templeName != ''">
-        #{templeName,jdbcType=VARCHAR},
       </if>
       <if test="godName != null">
         #{godName,jdbcType=VARCHAR},
@@ -226,6 +234,9 @@
       <if test="customerName != null">
         customer_name = #{customerName,jdbcType=VARCHAR},
       </if>
+      <if test="customerAge != null">
+        customer_age = #{customerYear,jdbcType=INTEGER},
+      </if>
       <if test="customerYear != null">
         customer_year = #{customerYear,jdbcType=INTEGER},
       </if>
@@ -250,6 +261,9 @@
       <if test="customerAddress != null">
         customer_address = #{customerAddress,jdbcType=VARCHAR},
       </if>
+      <if test="meritsProductId != null">
+        merits_product_id = #{meritsProductId,jdbcType=INTEGER},
+      </if>
       <if test="meritsType != null">
         merits_type = #{meritsType,jdbcType=INTEGER},
       </if>
@@ -261,9 +275,6 @@
       </if>
       <if test="templeId != null">
         temple_id = #{templeId,jdbcType=INTEGER},
-      </if>
-      <if test="templeName != null">
-        temple_name = #{templeName,jdbcType=VARCHAR},
       </if>
       <if test="godName != null">
         god_name = #{godName,jdbcType=VARCHAR},
@@ -294,6 +305,7 @@
     set merits_number = #{meritsNumber,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER},
       customer_name = #{customerName,jdbcType=VARCHAR},
+      customer_age = #{customerAge,jdbcType=INTEGER},
       customer_year = #{customerYear,jdbcType=INTEGER},
       customer_month = #{customerMonth,jdbcType=INTEGER},
       customer_day = #{customerDay,jdbcType=INTEGER},
@@ -302,11 +314,11 @@
       customer_address_city = #{customerAddressCity,jdbcType=VARCHAR},
       customer_address_area = #{customerAddressArea,jdbcType=VARCHAR},
       customer_address = #{customerAddress,jdbcType=VARCHAR},
+      merits_product_id = #{meritsProductId,jdbcType=INTEGER},
       merits_type = #{meritsType,jdbcType=INTEGER},
       merits_name = #{meritsName,jdbcType=VARCHAR},
       merits_account = #{meritsAccount,jdbcType=INTEGER},
       temple_id = #{templeId,jdbcType=INTEGER},
-      temple_name = #{templeName,jdbcType=VARCHAR},
       god_name = #{godName,jdbcType=VARCHAR},
       temple_house_name = #{templeHouseName,jdbcType=VARCHAR},
       merits_status = #{meritsStatus,jdbcType=INTEGER},
@@ -331,13 +343,16 @@
       <if test="customerName != null and customerName !=''">
         and customer_name = #{customerName,jdbcType=VARCHAR}
       </if>
-      <if test="customerYear != null and customerYear !=''">
+       <if test="customerAge != null">
+        and customer_age = #{customerYear,jdbcType=INTEGER}
+      </if>
+      <if test="customerYear != null">
         and customer_year = #{customerYear,jdbcType=INTEGER}
       </if>
-      <if test="customerMonth != null and customerMonth !=''">
+      <if test="customerMonth != null">
         and customer_month = #{customerMonth,jdbcType=INTEGER}
       </if>
-      <if test="customerDay != null and customerDay !=''">
+      <if test="customerDay != null">
         and customer_day = #{customerDay,jdbcType=INTEGER}
       </if>
       <if test="customerHour != null and customerHour !=''">
@@ -355,13 +370,16 @@
       <if test="customerAddress != null and customerAddress !=''">
         and customer_address = #{customerAddress,jdbcType=VARCHAR}
       </if>
-      <if test="meritsType != null and meritsType !=''">
+      <if test="meritsProductId != null">
+        and merits_product_id = #{meritsProductId,jdbcType=INTEGER}
+      </if>
+      <if test="meritsType != null ">
         and merits_type = #{meritsType,jdbcType=INTEGER}
       </if>
       <if test="meritsName != null and meritsName !=''">
         and merits_name = #{meritsName,jdbcType=VARCHAR}
       </if>
-      <if test="meritsAccount != null and meritsAccount !=''">
+      <if test="meritsAccount != null ">
         and merits_account = #{meritsAccount,jdbcType=INTEGER}
       </if>
       <if test="templeId != null ">
@@ -376,7 +394,7 @@
       <if test="templeHouseName != null and templeHouseName !=''">
         and temple_house_name = #{templeHouseName,jdbcType=VARCHAR}
       </if>
-      <if test="meritsStatus != null and meritsStatus !=''">
+      <if test="meritsStatus != null ">
         and merits_status = #{meritsStatus,jdbcType=INTEGER}
       </if>
       <if test="applyTime != null">
@@ -408,13 +426,16 @@
       <if test="customerName != null and customerName !=''">
         and customer_name = #{customerName,jdbcType=VARCHAR}
       </if>
-      <if test="customerYear != null and customerYear !=''">
+       <if test="customerAge != null">
+        and customer_age = #{customerYear,jdbcType=INTEGER}
+      </if>
+      <if test="customerYear != null">
         and customer_year = #{customerYear,jdbcType=INTEGER}
       </if>
-      <if test="customerMonth != null and customerMonth !=''">
+      <if test="customerMonth != null">
         and customer_month = #{customerMonth,jdbcType=INTEGER}
       </if>
-      <if test="customerDay != null and customerDay !=''">
+      <if test="customerDay != null">
         and customer_day = #{customerDay,jdbcType=INTEGER}
       </if>
       <if test="customerHour != null and customerHour !=''">
@@ -432,13 +453,16 @@
       <if test="customerAddress != null and customerAddress !=''">
         and customer_address = #{customerAddress,jdbcType=VARCHAR}
       </if>
-      <if test="meritsType != null and meritsType !=''">
+      <if test="meritsProductId != null">
+        and merits_product_id = #{meritsProductId,jdbcType=INTEGER}
+      </if>
+      <if test="meritsType != null ">
         and merits_type = #{meritsType,jdbcType=INTEGER}
       </if>
       <if test="meritsName != null and meritsName !=''">
         and merits_name = #{meritsName,jdbcType=VARCHAR}
       </if>
-      <if test="meritsAccount != null and meritsAccount !=''">
+      <if test="meritsAccount != null ">
         and merits_account = #{meritsAccount,jdbcType=INTEGER}
       </if>
       <if test="templeId != null ">
@@ -453,7 +477,7 @@
       <if test="templeHouseName != null and templeHouseName !=''">
         and temple_house_name = #{templeHouseName,jdbcType=VARCHAR}
       </if>
-      <if test="meritsStatus != null and meritsStatus !=''">
+      <if test="meritsStatus != null ">
         and merits_status = #{meritsStatus,jdbcType=INTEGER}
       </if>
       <if test="applyTime != null">
@@ -472,7 +496,7 @@
   </select>
   
   <select id="selectMeritsListForProductPage" resultMap="BaseResultMap">
-  		select id, merits_number, user_id, customer_name, merits_name, merits_account, temple_name from tb_merits limit 10
+  		select id, merits_number, user_id, customer_name,customer_age, merits_name, merits_account, temple_name from tb_merits limit 10
   </select>
   
 </mapper>

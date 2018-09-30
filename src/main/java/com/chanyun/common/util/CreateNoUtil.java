@@ -33,7 +33,4 @@ public class CreateNoUtil {
 	     return sb.toString();
 	 }
     
-    public static void main(String[] args) {
-		System.out.println(createNo());
-	}
 }

@@ -3,6 +3,7 @@ package com.chanyun.entity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,9 @@ public class User {
 	@ApiModelProperty(value="用户微信id",hidden=true)
     private String webchatId;
 	@ApiModelProperty(value="用户功德数")
-    private Integer meritsAccount;
+    private BigDecimal meritsAccount;
 	@ApiModelProperty(value="用户自身功德数",hidden=true)
-    private Integer meritsSelfAccount;
+    private BigDecimal meritsSelfAccount;
 	@ApiModelProperty(value="用户注册时间")
     private Date registTime;
 	@ApiModelProperty(value="用户最后一次登陆时间")
@@ -78,23 +79,25 @@ public class User {
         this.webchatId = webchatId == null ? null : webchatId.trim();
     }
 
-    public Integer getMeritsAccount() {
-        return meritsAccount;
-    }
+  
 
-    public void setMeritsAccount(Integer meritsAccount) {
-        this.meritsAccount = meritsAccount;
-    }
+    public BigDecimal getMeritsAccount() {
+		return meritsAccount;
+	}
 
-    public Integer getMeritsSelfAccount() {
-        return meritsSelfAccount;
-    }
+	public BigDecimal getMeritsSelfAccount() {
+		return meritsSelfAccount;
+	}
 
-    public void setMeritsSelfAccount(Integer meritsSelfAccount) {
-        this.meritsSelfAccount = meritsSelfAccount;
-    }
+	public void setMeritsAccount(BigDecimal meritsAccount) {
+		this.meritsAccount = meritsAccount;
+	}
 
-    public Date getRegistTime() {
+	public void setMeritsSelfAccount(BigDecimal meritsSelfAccount) {
+		this.meritsSelfAccount = meritsSelfAccount;
+	}
+
+	public Date getRegistTime() {
         return registTime;
     }
 
