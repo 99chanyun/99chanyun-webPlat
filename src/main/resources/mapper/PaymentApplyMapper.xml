@@ -136,4 +136,12 @@
     and payment_type = #{paymentType,jdbcType=VARCHAR}
     and logic_delete = 0
   </select>
+  
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="com.chanyun.entity.PaymentApply" >
+    select
+    <include refid="Base_Column_List" />
+    from tb_payment_apply
+    where pay_order_no = #{payOrderNo,jdbcType=VARCHAR}
+    and logic_delete = 0
+  </select>
 </mapper>

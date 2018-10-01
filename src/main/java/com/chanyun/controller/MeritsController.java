@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +29,7 @@ import com.chanyun.service.UserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @Api(tags="功德项目订单类")
 @RestController
@@ -65,6 +67,7 @@ public class MeritsController extends BaseController {
 		}
 		merits.setMeritsName(meritsProduct.getMeritsName());
 		merits.setMeritsType(meritsProduct.getMeritsType());
+		merits.setMeritsAccount(meritsProduct.getSalePrice());
 		log.info("--------------------功德事件入库----------------------------功德事件编号"+merits.getMeritsNumber());
 		Merits result = meritsService.addMerits(merits);
 		if(null == result) return result(Constants.RESULT_CODE_FAIL, "订单提交失败", result);
@@ -93,5 +96,31 @@ public class MeritsController extends BaseController {
 		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@ApiOperation("订单详情说明")
+	@PostMapping("meritsDetail")
+	@ResponseBody
+	public BaseResult<Merits> meritsDetail(@ApiParam(name="meritsNumber", value="查询条件订单编号") @RequestBody Merits merits){
+		if(StringUtils.isEmpty(merits.getMeritsNumber())){
+			return result(Constants.RESULT_CODE_CHECK_FAIL, "订单编号参数错误 ", merits);
+		}
+		
+		Merits result = meritsService.queryMeritsByMeritsNumber(merits.getMeritsNumber());
+		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
+	}
 	
+	
+	@SuppressWarnings("unchecked")
+	@ApiOperation("订单支付是否成功")
+	@PostMapping("meritsIsSuccess")
+	@ResponseBody
+	public BaseResult<Merits> meritsIsSuccess(@ApiParam(name="meritsNumber", value="查询条件订单编号") @RequestBody Merits merits){
+		if(StringUtils.isEmpty(merits.getMeritsNumber())){
+			return result(Constants.RESULT_CODE_CHECK_FAIL, "订单编号参数错误 ", merits);
+		}
+		
+		Merits result = meritsService.queryMeritsIsPayByMeritsNumber(merits.getMeritsNumber());
+		if(null == result) return result(Constants.RESULT_CODE_FAIL, "未支付", result);
+		return result(Constants.RESULT_CODE_SUCCESS, "支付成功", result);
+	}
 }

@@ -16,4 +16,5 @@ public interface PaymentOrderMapper {
     int updateByPrimaryKey(PaymentOrder record);
 
     PaymentOrder queryPaymentOrderByPayOrderNo(String payOrderNo);
+    
 }

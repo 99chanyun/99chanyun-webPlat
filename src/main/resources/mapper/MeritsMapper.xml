@@ -496,7 +496,7 @@
   </select>
   
   <select id="selectMeritsListForProductPage" resultMap="BaseResultMap">
-  		select id, merits_number, user_id, customer_name,customer_age, merits_name, merits_account, temple_name from tb_merits limit 10
+  		select id, merits_number, user_id, customer_name,customer_age, merits_name, merits_account, temple_name from tb_merits order by apply_time desc limit 10
   </select>
   
 </mapper>

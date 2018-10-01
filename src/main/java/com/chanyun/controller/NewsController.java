@@ -93,4 +93,14 @@ public class NewsController extends BaseController {
 		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
 	}
 	
+	@SuppressWarnings("unchecked")
+	@ApiOperation("资讯详情接口")
+	@PostMapping("/newsInfo")
+	@ResponseBody
+	public BaseResult<News> newsInfo(@RequestBody News news){
+		int id = news.getId();
+		news = newsService.queryNewsById(id);
+		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", news);
+	}
+	
 }

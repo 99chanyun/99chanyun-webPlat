@@ -6,13 +6,14 @@ import com.chanyun.common.constants.WechatKeyConstants;
 import com.chanyun.common.util.WeChatPayUtil;
 import com.chanyun.entity.PaymentOrder;
 import com.chanyun.service.impl.PaymentOrderService;
+
 import org.apache.commons.lang3.Validate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 微信异步通知处理接口实现
@@ -20,16 +21,16 @@ import java.util.Map;
  * @author hao.li
  */
 @Service("weixinReturnService")
+@Slf4j
 public class WeixinReturnService extends WeixinCommonService{
 
     @Autowired
     private PaymentOrderService paymentOrderService;
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(WeixinReturnService.class);
 
     public String backReturn(Map<String, String> params) {
 
-        LOGGER.info("调用微信异步回调接口");
+        log.info("调用微信异步回调接口");
 
         Validate.notEmpty(params, "responseMap can't be null/empty!");
         String backString;
@@ -40,28 +41,28 @@ public class WeixinReturnService extends WeixinCommonService{
                 String payOrderNo = params.get(WechatKeyConstants.OUT_TRADE_NO);
                 paymentOrder = paymentOrderService.queryPaymentOrderByPayOrderNo(payOrderNo);
                 if (paymentOrder != null) {
-                    LOGGER.info("getPaymentResultFromNotification OrderStatus SUCCESSED, Need no more notification");
+                    log.info("getPaymentResultFromNotification OrderStatus SUCCESSED, Need no more notification");
                     return WeChatPayConstants.SUCCESS_BACK_STRING;
                 }
                 //金额校验
 //                BigDecimal totalFee = new BigDecimal(params.get(WechatKeyConstants.TOTAL_FEE)).divide(new BigDecimal(100));
 //                BigDecimal payAmount = paymentOrderVo.getPayAmount() == null ? new BigDecimal(0) : paymentOrderVo.getPayAmount();
 //                if (totalFee.subtract(payAmount).doubleValue() != 0) {
-//                    LOGGER.error("getPaymentResultFromNotification totalFee not match, totalFee : {}, payAmount : {}", totalFee, payAmount);
+//                    log.error("getPaymentResultFromNotification totalFee not match, totalFee : {}, payAmount : {}", totalFee, payAmount);
 //                    return WeChatPayConstants.FAIL_BACK_STRING;
 //                }
 
                 String signKey = SIGN_KEY;
                 String mchId = MCH_ID;
-                if (LOGGER.isInfoEnabled()) {
-                    LOGGER.info(JSON.toJSONString(params));
+                if (log.isInfoEnabled()) {
+                    log.info(JSON.toJSONString(params));
                 }
 
                 String sign = params.get(WechatKeyConstants.SIGN);
                 String resSign = WeChatPayUtil.getSignAllowNull(params, WechatKeyConstants.SIGN, signKey);
                 //验证签名
                 if (!sign.equals(resSign)) {
-                    LOGGER.error("getPaymentResultFromNotification sign not match, parameter sign : {}, local sign : {}", sign, resSign);
+                    log.error("getPaymentResultFromNotification sign not match, parameter sign : {}, local sign : {}", sign, resSign);
                     //返回结果通知
                     return WeChatPayConstants.SIGN_NOT_MATCH_BACK_STRING;
                 }
@@ -71,7 +72,7 @@ public class WeixinReturnService extends WeixinCommonService{
                 // 验证商户号是否一致
 
                 if (!mchId.equals(partner)) {
-                    LOGGER.error("getPaymentResultFromNotification partner not match, parameter partner : {}, local partner : {}", partner,
+                    log.error("getPaymentResultFromNotification partner not match, parameter partner : {}, local partner : {}", partner,
                                     mchId);
                     //返回结果通知
                     return WeChatPayConstants.PARTNER_NOT_MATCH_BACK_STRING;
@@ -79,14 +80,14 @@ public class WeixinReturnService extends WeixinCommonService{
 
                 backString = WeChatPayConstants.SUCCESS_BACK_STRING;
             } else {
-                LOGGER.error("getPaymentResultFromNotification failure , result_code : {}, err_code : {},err_code_des : {}",
+                log.error("getPaymentResultFromNotification failure , result_code : {}, err_code : {},err_code_des : {}",
                                 params.get(WechatKeyConstants.RESULT_CODE), params.get(WechatKeyConstants.ERR_CODE),
                                 params.get(WechatKeyConstants.ERR_CODE_DES));
                 backString = WeChatPayConstants.FAIL_BACK_STRING;
             }
 
         } else {
-            LOGGER.error("getPaymentResultFromNotification failure , return_code : {}, return_msg : {}",
+            log.error("getPaymentResultFromNotification failure , return_code : {}, return_msg : {}",
                             params.get(WechatKeyConstants.RETURN_CODE), params.get(WechatKeyConstants.RETURN_MSG));
             return WeChatPayConstants.FAIL_BACK_STRING;
         }

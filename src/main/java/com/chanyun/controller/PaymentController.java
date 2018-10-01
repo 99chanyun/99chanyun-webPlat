@@ -1,13 +1,13 @@
 package com.chanyun.controller;
 
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.chanyun.bean.ApplyPayReturn;
 import com.chanyun.common.BaseResult;
 import com.chanyun.common.Constants;
 import com.chanyun.common.constants.WechatKeyConstants;
 import com.chanyun.common.constants.WeChatPayConstants.TradeType;
+import com.chanyun.common.util.QRCodeKitUtils;
 import com.chanyun.common.util.WeChatPayUtil;
 import com.chanyun.entity.Merits;
 import com.chanyun.entity.MeritsProduct;
@@ -18,19 +18,14 @@ import com.chanyun.service.MeritsService;
 import com.chanyun.service.OrderPayService;
 import com.chanyun.service.UserService;
 import com.chanyun.service.channel.ChannelPaymentFactory;
-import com.chanyun.service.channel.IChannelCreateOrderService;
 import com.chanyun.service.channel.weixin.WeixinReturnService;
 import com.chanyun.service.impl.PaymentApplyService;
 import com.chanyun.vo.CreateOrderVo;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,14 +33,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import springfox.documentation.annotations.ApiIgnore;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Map;
-import java.util.SortedMap;
-import java.util.TreeMap;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -70,8 +66,6 @@ public class PaymentController extends BaseController{
     private UserService userService;
     @Autowired
     private Environment env;
-    
-    private static final Logger logger = LoggerFactory.getLogger(PaymentController.class);
 
     /**
      * 创建支付订单
@@ -83,8 +77,6 @@ public class PaymentController extends BaseController{
      */
     @SuppressWarnings("unchecked")
 	@ApiOperation(value = "支付接口")
-    @ApiImplicitParams({@ApiImplicitParam(dataType = "CreateOrderVo", name
-            = "createOrderVo", value = "统一下单请求参数")})
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     public BaseResult<ApplyPayReturn> orderPay(@RequestBody Merits request, HttpServletResponse response) {
     	Merits merits = meritsSerivce.queryById(request.getId());
@@ -106,7 +98,7 @@ public class PaymentController extends BaseController{
     	MeritsProduct meritsProduct = meritsProductService.queryById(merits.getMeritsProductId());
     	String payAmount = String.valueOf(meritsProduct.getSalePrice());
     	CreateOrderVo orderVo = new CreateOrderVo();
-    	orderVo.setChannelType(merits.getPayType());
+    	orderVo.setChannelType(request.getPayType());
     	orderVo.setPayAmount(payAmount);
     	orderVo.setOrderNo(merits.getMeritsNumber());
     	orderVo.setPaymentType(TradeType.NATIVE.toString());
@@ -126,14 +118,19 @@ public class PaymentController extends BaseController{
     	}
     	
     	ApplyPayReturn result = new ApplyPayReturn();
-    	result.setPayUrl(resultJson.getString("code_url"));
+    	//将支付url生成二维码
+    	String base64Payurl = QRCodeKitUtils.generateQRCode(resultJson.getString("code_url"));
+    	result.setPayUrl(base64Payurl);
     	//订单状态更改
-    	merits = meritsSerivce.updateStatusMerits(Constants.MERITS_STATUS_APPLY_PAY, merits.getId());
+    	merits.setPayType(request.getPayType());
+    	merits.setMeritsStatus(Constants.MERITS_STATUS_APPLY_PAY);
+    	merits = meritsSerivce.updateMerits(merits);
     	if(null == merits) {
     		log.info("支付申请，订单状态更新失败，订单id: "+merits.getId());
     		result(Constants.RESULT_CODE_FAIL, "支付申请失败", merits);
     	}
-        return result(Constants.RESULT_CODE_SUCCESS, "支付申请成功", merits);
+    	result.setMerits(merits);
+        return result(Constants.RESULT_CODE_SUCCESS, "支付申请成功", result);
     }
 
     /**
@@ -141,10 +138,11 @@ public class PaymentController extends BaseController{
      *
      * @return
      */
+    @ApiIgnore
     @ApiOperation(value = "微信支付回调方法", httpMethod = "POST", notes = "微信支付回调方法")
     @RequestMapping(value = "/weixinReturnNotify", method = RequestMethod.POST)
     public void weixinReturnNotify(HttpServletRequest request, HttpServletResponse response) {
-        logger.info("进入微信回调方法......");
+        log.info("进入微信回调方法......");
         String inputLine;
         String notityXml = "";
         try {
@@ -155,7 +153,7 @@ public class PaymentController extends BaseController{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("解析出来的xml格式文件：" + notityXml);
+        log.info("解析出来的xml格式文件：" + notityXml);
         Map<String, String> params = null;
         try {
             params = WeChatPayUtil.xmlToMap(notityXml);
@@ -168,7 +166,7 @@ public class PaymentController extends BaseController{
             // 告诉微信服务器，我收到信息了，不要在调用回调
             response.getWriter().write(backString);
         } catch (IOException e) {
-            logger.info("异常信息：" + e);
+            log.info("异常信息：" + e);
         }
     }
     
@@ -177,35 +175,44 @@ public class PaymentController extends BaseController{
      * @param params
      */
     public void updateMerits(Map<String, String> params){
-    	String meritsNumber = params.get(WechatKeyConstants.OUT_TRADE_NO);
+    	String payOrderNumber = params.get(WechatKeyConstants.OUT_TRADE_NO);
+    	PaymentApply paymentApply = paymentApplyService.queryByPayOrderNo(payOrderNumber);
+    	if(null == paymentApply) {
+    		log.info("支付记录订单号不存在： "+payOrderNumber);
+    		return ;
+    	}
+    	String meritsNumber = paymentApply.getOrderNo();
     	String payNumber = params.get(WechatKeyConstants.TRANSACTION_ID);
     	BigDecimal meritsAccount = new BigDecimal(params.get(WechatKeyConstants.TOTAL_FEE)).divide(new BigDecimal(100));
     	Merits merits = meritsSerivce.queryMeritsByMeritsNumber(meritsNumber);
     	if(null == merits){
-    		logger.info("订单编号不存在： "+meritsNumber);
+    		log.info("订单编号不存在： "+meritsNumber);
     		return ;
     	}
+    	
+    	
     	if(merits.getMeritsAccount().compareTo(meritsAccount) != 0){
-    		logger.info("回调通知金额与支付金额不匹配=======回调金额"+meritsAccount+"============支付金额"+merits.getMeritsAccount() +"==============订单编号 ："+meritsNumber);
+    		log.info("回调通知金额与支付金额不匹配=======回调金额"+meritsAccount+"============支付金额"+merits.getMeritsAccount() +"==============订单编号 ："+meritsNumber);
     		return ;
     	}
     	merits.setMeritsStatus(Constants.MERITS_STATUS_PAY);
     	merits.setPayNumber(payNumber);
+    	merits.setCompletionTime(new Date());
     	Merits result= meritsSerivce.updateMerits(merits);
     	if(null == result ) {
-    		logger.info("订单状态与payNumber更新失败：订单编号 ："+meritsNumber +"===============payNumber"+payNumber);
+    		log.info("订单状态与payNumber更新失败：订单编号 ："+meritsNumber +"===============payNumber"+payNumber);
     		return ;
     	}
-    	logger.info("============订单状态修改成功===========");
+    	log.info("============订单状态修改成功===========");
     	User user = userService.queryUser(merits.getUserId());
     	if(null == user) {
-    		logger.info("====================订单用户查询失败=================订单编号 ："+meritsNumber);
+    		log.info("====================订单用户查询失败=================订单编号 ："+meritsNumber);
     		return ;
     	}
     	BigDecimal userAccount = user.getMeritsAccount();
     	userAccount = userAccount.add(meritsAccount);
     	user.setMeritsAccount(userAccount);
     	boolean flag = userService.edit(user);
-    	if(flag) logger.info("更新用户功德数失败：用户Id: "+user.getId()+"==================用户功德数量"+meritsAccount);
+    	if(!flag) log.info("更新用户功德数失败：用户Id: "+user.getId()+"==================用户功德数量"+meritsAccount);
     }
 }

@@ -38,4 +38,16 @@ public interface UserMapper {
      * @return
      */
     List<User> selectByMerits();
+    
+    /**
+     * 
+     * @Title: selectCountByParames   
+     * @Description: 冥等查询用户数据
+     * @param: @param user
+     * @param: @return      
+     * @return: int      
+     * @throws
+     */
+    int selectCountByParames(User user);
+    
 }

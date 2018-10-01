@@ -39,6 +39,13 @@ public interface MeritsService {
 	public Merits queryMeritsByMeritsNumber(String meritsNumber);
 	
 	/**
+	 * 功德订单查询
+	 * @param meritsNumber 功德编号
+	 * @return
+	 */
+	public Merits queryMeritsIsPayByMeritsNumber(String meritsNumber);
+	
+	/**
 	 * 添加功德记录
 	 * @param merits
 	 * @return

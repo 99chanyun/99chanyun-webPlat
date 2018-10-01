@@ -18,9 +18,8 @@ import com.chanyun.entity.PaymentApply;
 import com.chanyun.service.IPaymentApplyService;
 import com.chanyun.service.channel.IChannelCreateOrderService;
 import com.chanyun.vo.CreateOrderVo;
+
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,12 +27,14 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service("weixinCreateOrderService")
+@Slf4j
 public class WeixinCreateOrderService extends WeixinCommonService implements IChannelCreateOrderService {
 
     @Autowired
     private IPaymentApplyService paymentApplyService;
-    private static final Logger LOGGER = LoggerFactory.getLogger(WeixinCreateOrderService.class);
     WeChatPayRequestUtil weixinPayRequestUtil = new WeChatPayRequestUtil();
 
     public WeixinCreateOrderService() {
@@ -41,7 +42,7 @@ public class WeixinCreateOrderService extends WeixinCommonService implements ICh
 
     @Override
     public BaseResult<String> createOrder(CreateOrderVo createOrderVo) {
-        LOGGER.info("调用微信创单接口");
+        log.info("调用微信创单接口");
 
         BaseResult<String> baseResult = new BaseResult();
         HashMap<String, String> addition = new HashMap();
@@ -86,8 +87,8 @@ public class WeixinCreateOrderService extends WeixinCommonService implements ICh
         addition.put("nonce_str", WeChatPayUtil.getRandomStringByLength(32));
         String payOrderNo = CreateNoUtil.createNo();
         addition.put("out_trade_no", payOrderNo);
-        if (LOGGER.isDebugEnabled()) {
-            LOGGER.debug("object info:{}", JSON.toJSONString(addition));
+        if (log.isDebugEnabled()) {
+            log.debug("object info:{}", JSON.toJSONString(addition));
         }
 
         String sign = WeChatPayUtil.getSign(addition, null, SIGN_KEY);
@@ -110,9 +111,9 @@ public class WeixinCreateOrderService extends WeixinCommonService implements ICh
             e.printStackTrace();
         }
 
-        LOGGER.debug("response xml info: [{}]", response);
-        if (LOGGER.isInfoEnabled()) {
-            LOGGER.info("responseMap:[{}]", JSON.toJSONString(responseMap));
+        log.debug("response xml info: [{}]", response);
+        if (log.isInfoEnabled()) {
+            log.info("responseMap:[{}]", JSON.toJSONString(responseMap));
         }
 
 
@@ -124,7 +125,7 @@ public class WeixinCreateOrderService extends WeixinCommonService implements ICh
                 try {
                     resSign = WeChatPayUtil.getSign(responseMap, "sign", SIGN_KEY);
                 } catch (Exception var18) {
-                    LOGGER.error("sign failure");
+                    log.error("sign failure");
                     var18.printStackTrace();
                 }
 
@@ -148,16 +149,16 @@ public class WeixinCreateOrderService extends WeixinCommonService implements ICh
                         e.printStackTrace();
                     }
                 } else {
-                    LOGGER.error("unifiedOrder sign not match, parameter sign : {}, local sign : {}", responseMap.get("sign"), resSign);
+                    log.error("unifiedOrder sign not match, parameter sign : {}, local sign : {}", responseMap.get("sign"), resSign);
                 }
             } else {
-                LOGGER.error("unifiedOrder failure , result_code : {}, err_code : {},err_code_des : {}", new Object[]{responseMap.get("result_code"), responseMap.get("err_code"), responseMap.get("err_code_des")});
+                log.error("unifiedOrder failure , result_code : {}, err_code : {},err_code_des : {}", new Object[]{responseMap.get("result_code"), responseMap.get("err_code"), responseMap.get("err_code_des")});
                 baseResult.setCode(Constants.RESULT_CODE_FAIL);
                 baseResult.setMessage((String) responseMap.get("err_code_des"));
                 baseResult.setData(JSON.toJSONString(responseMap));
             }
         } else {
-            LOGGER.error("unifiedOrder failure , return_code : {}, return_msg : {}", responseMap.get("return_code"), responseMap.get("return_msg"));
+            log.error("unifiedOrder failure , return_code : {}, return_msg : {}", responseMap.get("return_code"), responseMap.get("return_msg"));
             baseResult.setCode(Constants.RESULT_CODE_FAIL);
             baseResult.setMessage((String) responseMap.get("return_msg"));
         }

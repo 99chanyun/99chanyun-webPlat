@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.chanyun.common.Constants;
 import com.chanyun.common.PageInfo;
 import com.chanyun.dao.MeritsMapper;
 import com.chanyun.entity.Merits;
@@ -72,6 +73,18 @@ public class MeritsServiceImpl implements MeritsService{
 		Page<Merits> sqlResult = meritsMapper.selectByPage(params);
 		PageInfo<Merits> result = new PageInfo<Merits>(sqlResult);
 		return result;
+	}
+	/* (non-Javadoc)
+	 * @see com.chanyun.service.MeritsService#queryMeritsIsPayByMeritsNumber(java.lang.String)
+	 */
+	@Override
+	public Merits queryMeritsIsPayByMeritsNumber(String meritsNumber) {
+		Merits merits = new Merits();
+		merits.setMeritsNumber(meritsNumber);
+		merits.setMeritsStatus(Constants.MERITS_STATUS_PAY);
+		List<Merits> resultList = meritsMapper.selectByParams(merits);
+		if(null != resultList && resultList.size() > 0) return resultList.get(0);
+		return null;
 	}
 
 }
