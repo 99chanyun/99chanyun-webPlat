@@ -42,8 +42,8 @@ public class ApplicationStart {
             public void customize(ConfigurableEmbeddedServletContainer container) {
 
                 ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/index.html");
-
                 container.addErrorPages(error404Page);
+                container.setSessionTimeout(600);
             }
         };
     }

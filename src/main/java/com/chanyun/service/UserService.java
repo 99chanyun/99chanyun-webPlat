@@ -55,4 +55,26 @@ public interface UserService {
 	 * @return
 	 */
 	public List<User> queryMeritsUserList();
+	
+	/**
+	 * 
+	 * @Title: queryUserCountByUserAccount   
+	 * @Description: 根据 用户名查询用户数量
+	 * @param: @param user
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int queryUserCountByUserAccount(String userAccount);
+	
+	/**
+	 * 
+	 * @Title: queryUserCountByUserPhone   
+	 * @Description: 根据 用户手机号查询用户数量
+	 * @param: @param user
+	 * @param: @return      
+	 * @return: int      
+	 * @throws
+	 */
+	public int queryUserCountByUserPhone(String userPhone);
 }

@@ -47,4 +47,28 @@ public class UserServiceImpl implements UserService{
 		return result;
 	}
 
+	/* (non-Javadoc)
+	 * @see com.chanyun.service.UserService#queryUserCountByUserAccount(java.lang.String)
+	 */
+	@Override
+	public int queryUserCountByUserAccount(String userAccount) {
+		User user  = new User();
+		user.setUserAccount(userAccount);
+		int i = userMapper.selectCountByParames(user);
+		return i;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.chanyun.service.UserService#queryUserCountByUserPhone(java.lang.String)
+	 */
+	@Override
+	public int queryUserCountByUserPhone(String userPhone) {
+		User user  = new User();
+		user.setUserPhone(userPhone);
+		int i = userMapper.selectCountByParames(user);
+		return i;
+	}
+
+	
+
 }

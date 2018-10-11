@@ -1,5 +1,8 @@
 package com.chanyun.controller;
 
+import java.math.BigDecimal;
+import java.util.Date;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
@@ -54,6 +57,9 @@ public class UserController extends BaseController{
 		if(null == result){
 			return result(Constants.RESULT_CODE_CHECK_FAIL, "登陆失败，用户名密码不对", null);
 		}
+		result.setLastLoginTime(new Date());
+		//更新登陆时间
+		userService.edit(user);
 		//在session中存储用户id,做为用户登陆标识
 		session.setAttribute(Constants.USER_LOGIN_SESSION_KEY, result.getId());
 		//将密码隐藏
@@ -66,6 +72,13 @@ public class UserController extends BaseController{
 	@PostMapping("regist")
 	@ResponseBody
 	public BaseResult<User> regist(@RequestBody User user){
+		int i = userService.queryUserCountByUserAccount(user.getUserAccount());
+		if(i > 0) return result(Constants.RESULT_CODE_CHECK_FAIL, "账号已经存在", user);
+		
+		int k= userService.queryUserCountByUserAccount(user.getUserAccount());
+		if(k > 0) return result(Constants.RESULT_CODE_CHECK_FAIL, "用户手机号已经绑定", user);
+		user.setMeritsAccount(BigDecimal.ZERO);
+		user.setMeritsSelfAccount(BigDecimal.ZERO);
 		user = userService.add(user);
 		user.setUserPassword(null);
 		return result(Constants.RESULT_CODE_SUCCESS, "注册成功", user);

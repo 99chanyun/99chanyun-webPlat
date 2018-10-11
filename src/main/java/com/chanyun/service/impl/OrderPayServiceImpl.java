@@ -35,7 +35,7 @@ public class OrderPayServiceImpl implements OrderPayService {
         if(paymentApply != null){
             baseResult.setCode(Constants.RESULT_CODE_SUCCESS);
             baseResult.setMessage("SUCCESS");
-            baseResult.setData(JSON.toJSONString(paymentApply.getPrepayData()));
+            baseResult.setData(paymentApply.getPrepayData());
         }else{
             // 发起支付
             IChannelCreateOrderService channelCreateOrderService = channelPaymentFactory

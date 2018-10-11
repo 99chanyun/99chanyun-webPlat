@@ -1,5 +1,7 @@
 package com.chanyun.dao;
 
+import java.util.List;
+
 import com.chanyun.entity.PaymentApply;
 
 public interface PaymentApplyMapper {
@@ -16,4 +18,6 @@ public interface PaymentApplyMapper {
     int updateByPrimaryKey(PaymentApply record);
 
     PaymentApply selectByPaymentApply(PaymentApply  paymentApply);
+    
+    List<PaymentApply> selectByOrderNo(PaymentApply  paymentApply);
 }
