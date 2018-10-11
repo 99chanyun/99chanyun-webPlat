@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.chanyun.common.BaseResult;
 import com.chanyun.common.Constants;
+import com.chanyun.common.util.CreateNoUtil;
 import com.chanyun.entity.Bodhisattva;
 import com.chanyun.entity.MeritsProduct;
 import com.chanyun.entity.Temple;
@@ -50,6 +51,8 @@ public class TempleController extends BaseController{
 	@PostMapping("addTemple")
 	@ResponseBody
 	public BaseResult<List<Temple>> addTemple(@RequestBody Temple temple){
+		temple.setStatus(Constants.TEMPLE_STATUE_APPLY);
+		temple.setTempleNumber(Constants.TEMPLE_NUMBER_PREFIX+CreateNoUtil.createNo());
 		temple = templeService.addTemple(temple);
 		return result(Constants.RESULT_CODE_SUCCESS, "申请成功", temple);
 	}

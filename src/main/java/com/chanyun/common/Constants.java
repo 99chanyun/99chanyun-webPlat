@@ -110,4 +110,29 @@ public class Constants {
 	 * 功德项目 忏悔
 	 */
 	public final static int MERITS_TYPE_CONFESSION=4;
+	
+	/**
+	 * 寺庙订单状态-申请
+	 */
+	public final static int TEMPLE_STATUE_APPLY=0;
+	/**
+	 * 寺庙订单状态-启用
+	 */
+	public final static int TEMPLE_STATUE_ABLE=1;
+	/**
+	 * 寺庙订单状态-禁用
+	 */
+	public final static int TEMPLE_STATUE_DISABLE=2;
+	/**
+	 * 寺庙订单状态-审核未通过
+	 */
+	public final static int TEMPLE_STATUE_CHECK_OUT=3;
+	/**
+	 * 寺庙订单状态-异常
+	 */
+	public final static int TEMPLE_STATUE_EXCEPTION=4;
+	/**
+	 * 订单编号前缀
+	 */
+	public final static String TEMPLE_NUMBER_PREFIX="T";
 }
