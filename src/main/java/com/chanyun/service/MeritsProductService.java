@@ -2,6 +2,7 @@ package com.chanyun.service;
 
 import java.util.List;
 
+import com.chanyun.common.PageInfo;
 import com.chanyun.entity.MeritsProduct;
 
 /**
