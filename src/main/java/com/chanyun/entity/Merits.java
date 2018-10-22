@@ -6,6 +6,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @ApiModel("用户功德(订单)信息")
 public class Merits {
 	@ApiModelProperty(value="功德id",readOnly=true)
@@ -53,6 +55,7 @@ public class Merits {
 	@ApiModelProperty(value="功德事件状态 0 申请 1未支付 2支付成功  3完成 4未完成 5退款 9异常",example="0")
     private Integer meritsStatus;
 	@ApiModelProperty(value="申请时间",example="2018-09-16 14:00")
+	@JsonFormat(pattern="yyyy-MM-dd")
     private Date applyTime;
 	@ApiModelProperty(value="完成时间",example="2018-09-17 14:00")
     private Date completionTime;

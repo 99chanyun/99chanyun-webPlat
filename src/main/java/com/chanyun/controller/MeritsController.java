@@ -56,7 +56,7 @@ public class MeritsController extends BaseController {
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
 		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
 		//订单初始值设置
-		merits.setApplyTime(new Date());
+//		merits.setApplyTime(new Date());
 		merits.setMeritsStatus(Constants.MERITS_STATUS_APPLY);
 		merits.setUserId(userId);
 		merits.setMeritsNumber(Constants.MERITS_NUMBER_PREFIX+CreateNoUtil.createNo());
