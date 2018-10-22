@@ -22,7 +22,9 @@ import com.chanyun.common.PageInfo;
 import com.chanyun.common.QueryParams;
 import com.chanyun.common.util.CreateNoUtil;
 import com.chanyun.entity.Merits;
+import com.chanyun.entity.MeritsDetail;
 import com.chanyun.entity.MeritsProduct;
+import com.chanyun.service.MeritsDetailService;
 import com.chanyun.service.MeritsProductService;
 import com.chanyun.service.MeritsService;
 import com.chanyun.service.UserService;
@@ -41,20 +43,22 @@ public class MeritsController extends BaseController {
 	private MeritsService meritsService;
 	@Autowired
 	private UserService userService;
-	
 	@Autowired
 	private MeritsProductService meritsProductService;
+	@Autowired
+	private MeritsDetailService meritsDetailService;
 	
 	
 	@SuppressWarnings("unchecked")
 	@ApiOperation("用户功德订单提交")
 	@PostMapping("applyMerits")
 	@ResponseBody
-	public BaseResult<Merits> applyMerits(@RequestBody Merits merits, HttpServletRequest request){
+	public BaseResult<Merits> applyMerits(@RequestBody MeritsDetail meritsDetail, HttpServletRequest request){
 		log.info("------------------进入功德事件提交---------------");
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
 		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
+		Merits merits = meritsDetail.getMerits(); 
 		//订单初始值设置
 //		merits.setApplyTime(new Date());
 		merits.setMeritsStatus(Constants.MERITS_STATUS_APPLY);
@@ -71,6 +75,10 @@ public class MeritsController extends BaseController {
 		log.info("--------------------功德事件入库----------------------------功德事件编号"+merits.getMeritsNumber());
 		Merits result = meritsService.addMerits(merits);
 		if(null == result) return result(Constants.RESULT_CODE_FAIL, "订单提交失败", result);
+		meritsDetail.setMeritsId(result.getId());
+		meritsDetail.setCreateTime(new Date());
+		MeritsDetail resultDetail = meritsDetailService.insertMeritsDetail(meritsDetail);
+		if(null == resultDetail) return result(Constants.RESULT_CODE_FAIL, "订单详情提交失败", resultDetail);
 		return result(Constants.RESULT_CODE_SUCCESS, "订单提交成功", result);
 	}
 	

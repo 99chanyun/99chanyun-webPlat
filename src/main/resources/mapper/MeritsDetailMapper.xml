@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chanyun.dao.MeritsDetailMapper">
+  <resultMap id="BaseResultMap" type="com.chanyun.entity.MeritsDetail">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="promise_content" jdbcType="VARCHAR" property="promiseContent" />
+    <result column="merits_id" jdbcType="INTEGER" property="meritsId" />
+    <result column="merits_img1" jdbcType="VARCHAR" property="meritsImg1" />
+    <result column="merits_img2" jdbcType="VARCHAR" property="meritsImg2" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, promise_content, merits_id, merits_img1, merits_img2, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_merits_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from tb_merits_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.MeritsDetail">
+    insert into tb_merits_detail (id, promise_content, merits_id, 
+      merits_img1, merits_img2, create_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{promiseContent,jdbcType=VARCHAR}, #{meritsId,jdbcType=INTEGER}, 
+      #{meritsImg1,jdbcType=VARCHAR}, #{meritsImg2,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.chanyun.entity.MeritsDetail">
+    insert into tb_merits_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="promiseContent != null">
+        promise_content,
+      </if>
+      <if test="meritsId != null">
+        merits_id,
+      </if>
+      <if test="meritsImg1 != null">
+        merits_img1,
+      </if>
+      <if test="meritsImg2 != null">
+        merits_img2,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="promiseContent != null">
+        #{promiseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsId != null">
+        #{meritsId,jdbcType=INTEGER},
+      </if>
+      <if test="meritsImg1 != null">
+        #{meritsImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsImg2 != null">
+        #{meritsImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chanyun.entity.MeritsDetail">
+    update tb_merits_detail
+    <set>
+      <if test="promiseContent != null">
+        promise_content = #{promiseContent,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsId != null">
+        merits_id = #{meritsId,jdbcType=INTEGER},
+      </if>
+      <if test="meritsImg1 != null">
+        merits_img1 = #{meritsImg1,jdbcType=VARCHAR},
+      </if>
+      <if test="meritsImg2 != null">
+        merits_img2 = #{meritsImg2,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chanyun.entity.MeritsDetail">
+    update tb_merits_detail
+    set promise_content = #{promiseContent,jdbcType=VARCHAR},
+      merits_id = #{meritsId,jdbcType=INTEGER},
+      merits_img1 = #{meritsImg1,jdbcType=VARCHAR},
+      merits_img2 = #{meritsImg2,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryDetailByMeritsId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  select 
+    <include refid="Base_Column_List" />
+    from tb_merits_detail
+    where merits_id = #{meritsId,jdbcType=INTEGER}
+  </select>
+</mapper>
