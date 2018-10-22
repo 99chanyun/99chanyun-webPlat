@@ -120,7 +120,7 @@ public class MeritsController extends BaseController {
 		}
 		
 		Merits result = meritsService.queryMeritsIsPayByMeritsNumber(merits.getMeritsNumber());
-		if(null == result) return result(Constants.RESULT_CODE_FAIL, "未支付", result);
+		if(null == result) return result(Constants.RESULT_CODE_UNPAY, "未支付", result);
 		return result(Constants.RESULT_CODE_SUCCESS, "支付成功", result);
 	}
 }

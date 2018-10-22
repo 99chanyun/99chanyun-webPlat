@@ -24,6 +24,11 @@ public class Constants {
 	public final static String RESULT_CODE_CHECK_FAIL="0002";
 	
 	/**
+	 *返回码-订单未支付
+	 */
+	public final static String RESULT_CODE_UNPAY="0003";
+	
+	/**
 	 * 佛门动态
 	 */
 	public final static int NEWS_TYPE_DYNAMIC=0;
