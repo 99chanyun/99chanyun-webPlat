@@ -57,7 +57,7 @@ public class MeritsController extends BaseController {
 		log.info("------------------进入功德事件提交---------------");
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
-		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
+		if(null == userId) return result(Constants.RESULT_CODE_NOT_LOGIN, "订单提交失败,用户未登陆", null);
 		Merits merits = meritsDetail.getMerits(); 
 		//订单初始值设置
 //		merits.setApplyTime(new Date());
@@ -99,7 +99,7 @@ public class MeritsController extends BaseController {
 	public BaseResult<PageInfo<Merits>> meritsListForUserPage(@RequestBody QueryParams<Merits> params, HttpServletRequest request){
 		HttpSession session = request.getSession();
 		Integer userId = (Integer) session.getAttribute(Constants.USER_LOGIN_SESSION_KEY);
-		if(null == userId) return result(Constants.RESULT_CODE_CHECK_FAIL, "订单提交失败,用户未登陆", null);
+		if(null == userId) return result(Constants.RESULT_CODE_NOT_LOGIN, "订单提交失败,用户未登陆", null);
 		PageInfo<Merits> result = meritsService.queryMeritsListForUserPage(params.getPageNum(), params.getPageSize(), userId);
 		return result(Constants.RESULT_CODE_SUCCESS, "查询成功", result);
 	}

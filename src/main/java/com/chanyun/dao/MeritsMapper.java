@@ -1,6 +1,7 @@
 package com.chanyun.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.chanyun.entity.Merits;
 import com.github.pagehelper.Page;
@@ -38,5 +39,11 @@ public interface MeritsMapper {
      */
     List<Merits> selectMeritsListForProductPage();
     
+    /**
+     * 
+     * @param userId
+     * @return
+     */
+    List<Map> selectUserMeritsCount(Integer userId);
     
 }

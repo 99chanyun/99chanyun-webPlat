@@ -1,6 +1,7 @@
 package com.chanyun.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,6 +86,11 @@ public class MeritsServiceImpl implements MeritsService{
 		List<Merits> resultList = meritsMapper.selectByParams(merits);
 		if(null != resultList && resultList.size() > 0) return resultList.get(0);
 		return null;
+	}
+	@Override
+	public List<Map> queryUserMeritsCount(Integer userId) {
+		List<Map> result = meritsMapper.selectUserMeritsCount(userId);
+		return result;
 	}
 
 }

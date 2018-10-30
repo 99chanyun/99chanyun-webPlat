@@ -1,6 +1,7 @@
 package com.chanyun.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.chanyun.common.PageInfo;
 import com.chanyun.entity.Merits;
@@ -85,4 +86,11 @@ public interface MeritsService {
 	 * @return
 	 */
 	public Merits queryById(int meritsId);
+	
+	/**
+	 * 统计用户功德
+	 * @param userId
+	 * @return
+	 */
+	public List<Map> queryUserMeritsCount(Integer userId);
 }

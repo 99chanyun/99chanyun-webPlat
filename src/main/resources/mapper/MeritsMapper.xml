@@ -499,4 +499,7 @@
   		select id, merits_number, user_id, customer_name,customer_age, merits_name, merits_account, temple_name from tb_merits order by apply_time desc limit 10
   </select>
   
+  <select id="selectUserMeritsCount" parameterType="java.lang.Integer" resultType="java.util.Map">
+  	select sum(merits_account) as meritsAccount,meritsType from tb_merits where user_id = #{userId, jdbcType=INTEGER} and merits_status = 3 group by merits_type;
+  </select>
 </mapper>

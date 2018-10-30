@@ -21,12 +21,16 @@ public class Constants {
 	/**
 	 *返回码-参数较验错误
 	 */
-	public final static String RESULT_CODE_CHECK_FAIL="0002";
+	public final static String RESULT_CODE_NOT_LOGIN="0002";
 	
 	/**
 	 *返回码-订单未支付
 	 */
 	public final static String RESULT_CODE_UNPAY="0003";
+	/**
+	 *返回码-参数较验错误
+	 */
+	public final static String RESULT_CODE_CHECK_FAIL="0004";
 	
 	/**
 	 * 佛门动态
