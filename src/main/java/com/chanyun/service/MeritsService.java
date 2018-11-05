@@ -93,4 +93,11 @@ public interface MeritsService {
 	 * @return
 	 */
 	public List<Map> queryUserMeritsCount(Integer userId);
+	
+	/**
+	 * 用户分页查询功德事件
+	 * @param merits
+	 * @return
+	 */
+	public PageInfo<Merits> findByPageForUser(int pageNum, int pageSize,Merits merits);
 }

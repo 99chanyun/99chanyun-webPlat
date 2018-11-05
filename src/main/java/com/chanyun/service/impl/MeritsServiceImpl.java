@@ -92,5 +92,17 @@ public class MeritsServiceImpl implements MeritsService{
 		List<Map> result = meritsMapper.selectUserMeritsCount(userId);
 		return result;
 	}
+	/* (non-Javadoc)
+	 * @see com.chanyun.service.MeritsService#findByPageForUser(int, int, com.chanyun.entity.Merits)
+	 */
+	@Override
+	public PageInfo<Merits> findByPageForUser(int pageNum, int pageSize,
+			Merits merits) {
+		PageHelper.startPage(pageNum,pageSize);
+		PageHelper.orderBy("apply_time desc");
+		Page<Merits> sqlResult = meritsMapper.selectUserMeritsPage(merits);
+		PageInfo<Merits> result = new PageInfo<Merits>(sqlResult);
+		return result;
+	}
 
 }

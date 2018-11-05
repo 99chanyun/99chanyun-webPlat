@@ -500,6 +500,87 @@
   </select>
   
   <select id="selectUserMeritsCount" parameterType="java.lang.Integer" resultType="java.util.Map">
-  	select sum(merits_account) as meritsAccount,meritsType from tb_merits where user_id = #{userId, jdbcType=INTEGER} and merits_status = 3 group by merits_type;
+  	select sum(merits_account) as meritsAccount,merits_Type as meritsType from tb_merits where user_id = #{userId, jdbcType=INTEGER} and merits_status = 3 group by merits_type;
+  </select>
+  
+  <select id="selectUserMeritsPage" parameterType="com.chanyun.entity.Merits" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from tb_merits where merits_status in (2,3)
+      <if test="meritsNumber != null and meritsNumber !=''">
+        and merits_number = #{meritsNumber,jdbcType=VARCHAR}
+      </if>
+      <if test="userId != null and userId !=''">
+        and user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="customerName != null and customerName !=''">
+        and customer_name = #{customerName,jdbcType=VARCHAR}
+      </if>
+       <if test="customerAge != null">
+        and customer_age = #{customerYear,jdbcType=INTEGER}
+      </if>
+      <if test="customerYear != null">
+        and customer_year = #{customerYear,jdbcType=INTEGER}
+      </if>
+      <if test="customerMonth != null">
+        and customer_month = #{customerMonth,jdbcType=INTEGER}
+      </if>
+      <if test="customerDay != null">
+        and customer_day = #{customerDay,jdbcType=INTEGER}
+      </if>
+      <if test="customerHour != null and customerHour !=''">
+        and customer_hour = #{customerHour,jdbcType=VARCHAR}
+      </if>
+      <if test="customerAddressProvince != null and customerAddressProvince !=''">
+        and customer_address_province = #{customerAddressProvince,jdbcType=VARCHAR}
+      </if>
+      <if test="customerAddressCity != null and customerAddressCity !=''">
+        and customer_address_city = #{customerAddressCity,jdbcType=VARCHAR}
+      </if>
+      <if test="customerAddressArea != null and customerAddressArea !=''">
+        and customer_address_area = #{customerAddressArea,jdbcType=VARCHAR}
+      </if>
+      <if test="customerAddress != null and customerAddress !=''">
+        and customer_address = #{customerAddress,jdbcType=VARCHAR}
+      </if>
+      <if test="meritsProductId != null">
+        and merits_product_id = #{meritsProductId,jdbcType=INTEGER}
+      </if>
+      <if test="meritsType != null ">
+        and merits_type = #{meritsType,jdbcType=INTEGER}
+      </if>
+      <if test="meritsName != null and meritsName !=''">
+        and merits_name = #{meritsName,jdbcType=VARCHAR}
+      </if>
+      <if test="meritsAccount != null ">
+        and merits_account = #{meritsAccount,jdbcType=INTEGER}
+      </if>
+      <if test="templeId != null ">
+        and temple_id = #{templeId,jdbcType=INTEGER}
+      </if>
+      <if test="templeName != null and templeName !=''">
+        and temple_name = #{templeName,jdbcType=VARCHAR}
+      </if>
+      <if test="godName != null and godName !=''">
+        and god_name = #{godName,jdbcType=VARCHAR}
+      </if>
+      <if test="templeHouseName != null and templeHouseName !=''">
+        and temple_house_name = #{templeHouseName,jdbcType=VARCHAR}
+      </if>
+      <if test="meritsStatus != null ">
+        and merits_status = #{meritsStatus,jdbcType=INTEGER}
+      </if>
+      <if test="applyTime != null">
+        and apply_time = #{applyTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="completionTime != null">
+        and completion_time = #{completionTime,jdbcType=TIMESTAMP}
+      </if>
+      <if test="payType != null and payType !=''">
+        and pay_type = #{payType,jdbcType=VARCHAR}
+      </if>
+      <if test="payNumber != null and payNumber !=''">
+        and pay_number = #{payNumber,jdbcType=VARCHAR}
+      </if>
   </select>
 </mapper>

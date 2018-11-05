@@ -46,4 +46,11 @@ public interface MeritsMapper {
      */
     List<Map> selectUserMeritsCount(Integer userId);
     
+    /**
+     * 
+     * @param userId
+     * @return
+     */
+    Page<Merits> selectUserMeritsPage(Merits merits);
+    
 }
