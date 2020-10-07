@@ -2,4 +2,7 @@
 /.settings/
 .classpath
 .project
-.gitgnore
+.gitignore
+spring1.log
+/src/main/resources/static
+/src/main/resources/application-pro.properties
